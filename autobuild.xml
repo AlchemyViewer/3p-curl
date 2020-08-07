@@ -276,7 +276,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
       <key>canonical_repo</key>
       <string>https://bitbucket.org/lindenlab/3p-curl</string>
       <key>copyright</key>
-      <string>Copyright (c) 1996 - 2014, Daniel Stenberg, (daniel@haxx.se).</string>
+      <string>Copyright (c) 1996 - 2017, Daniel Stenberg, <daniel@haxx.se>, and many contributors</string>
       <key>description</key>
       <string>Library for transferring data specified with URL syntax</string>
       <key>license</key>

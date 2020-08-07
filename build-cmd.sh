@@ -330,13 +330,13 @@ case "$AUTOBUILD_PLATFORM" in
         LDFLAGS="-L$stage/packages/lib/debug/" \
         LIBS="-ldl -lpthread" \
         ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no --enable-threaded-resolver \
-        --disable-ldap --disable-ldaps  --without-libssh2 --enable-cookies \
-        --prefix="$stage" --libdir="$stage"/lib/debug \
+        --enable-cookies --disable-ldap --disable-ldaps  --without-libssh2 \
+        --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/debug" \
         --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
         
         check_damage "$AUTOBUILD_PLATFORM"
         make -j$JOBS
-        make install
+        make install DESTDIR="$stage"
         
         # conditionally run unit tests
         if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
@@ -379,12 +379,13 @@ case "$AUTOBUILD_PLATFORM" in
         LDFLAGS="-L$stage/packages/lib/release/" \
         LIBS="-ldl -lpthread" \
         ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no --enable-threaded-resolver \
-        --without-libssh2 --enable-cookies --disable-ldap --disable-ldaps \
-        --prefix="$stage" --libdir="$stage"/lib/release \
+        --enable-cookies --disable-ldap --disable-ldaps --without-libssh2 \
+        --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/release" \
         --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
+
         check_damage "$AUTOBUILD_PLATFORM"
         make -j$JOBS
-        make install
+        make install DESTDIR="$stage"
         
         # conditionally run unit tests
         if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then

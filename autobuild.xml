@@ -47,9 +47,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c3c5ff7d2f7ac1143ef8d888192d4a53</string>
+              <string>aa902fcc428a59c9e61acd7021ee1482</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9257/41579/nghttp2-1.25.0.509246-linux64-509246.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/linux64/debian10/nghttp2-1.41.0.202200516-linux64-202200516.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -82,12 +84,12 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>source_type</key>
         <string>hg</string>
         <key>version</key>
-        <string>1.25.0.538985</string>
+        <string>1.41.0.202200516</string>
       </map>
       <key>openssl</key>
       <map>
         <key>copyright</key>
-        <string>Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
+        <string>Copyright (c) 1998-2018 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
         <key>description</key>
         <string>Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) Library</string>
         <key>license</key>
@@ -139,9 +141,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>d50ccfbf0c1d249392919e2c46ad8d5c</string>
+              <string>a1048f56c334c5599efb60eab63815d0</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/8339/33495/openssl-1.0.2l.508328-linux64-508328.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/linux64/debian10/openssl-1.0.2u.202200624-linux64-202200624.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -172,12 +176,12 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.2l.539874</string>
+        <string>1.0.2u.202200624</string>
       </map>
       <key>zlib</key>
       <map>
         <key>copyright</key>
-        <string>Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler</string>
+        <string>Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler</string>
         <key>description</key>
         <string>Zlib Data Compression Library</string>
         <key>license</key>
@@ -229,9 +233,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>dab6be8b0596c1e3354f2b6d41335131</string>
+              <string>5d7866be22eaca6d38cfd0bb4e411fb0</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/866/1898/zlib-1.2.8.500857-linux64-500857.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/linux64/debian10/zlib-1.2.11.202200500-linux64-202200500.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -262,7 +268,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.8.538988</string>
+        <string>1.2.11.202200500</string>
       </map>
     </map>
     <key>package_description</key>

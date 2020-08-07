@@ -1,3 +1,2 @@
-syntax: glob
 autobuild-parabuild-bootstrap/
 stage/

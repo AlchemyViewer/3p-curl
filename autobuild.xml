@@ -30,18 +30,6 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>name</key>
             <string>darwin64</string>
           </map>
-          <key>linux</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>079c1a1bdb3ce1cda8ce3d7f75eeced3</string>
-              <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/9258/41585/nghttp2-1.25.0.509246-linux-509246.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux</string>
-          </map>
           <key>linux64</key>
           <map>
             <key>archive</key>
@@ -61,9 +49,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>246dd8445be87c698aa7fa318bcdd7e5</string>
+              <string>ee3101bb435f757d60b137d8df370192</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55035/511985/nghttp2-1.25.0.538985-windows-538985.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/windows/nghttp2-1.41.0.316-windows-316.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -73,9 +63,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f2fd2dbe8704ec63ab433cbe8e03f7c4</string>
+              <string>750766106346e4eead713914411f9075</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55031/511978/nghttp2-1.25.0.538985-windows64-538985.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/windows64/nghttp2-1.41.0.316-windows64-316.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -84,7 +76,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>source_type</key>
         <string>hg</string>
         <key>version</key>
-        <string>1.41.0.202200516</string>
+        <string>1.41.0.316</string>
       </map>
       <key>openssl</key>
       <map>
@@ -124,18 +116,6 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>name</key>
             <string>darwin64</string>
           </map>
-          <key>linux</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>f46a601d60b7dbcfde32afc0cb64453e</string>
-              <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-openssl/rev/314227/arch/Linux/installer/openssl-1.0.1h.314227-linux-314227.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux</string>
-          </map>
           <key>linux64</key>
           <map>
             <key>archive</key>
@@ -155,9 +135,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>2b2f61313b1cbd2893c1ba5bf15061fa</string>
+              <string>c17dd910ba85c25186b6249c5f3a826c</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56328/526826/openssl-1.0.2l.539874-windows-539874.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/windows/openssl-1.0.2u.315-windows-315.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -167,16 +149,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>59aae854155bc7119e0dca25e65828c0</string>
+              <string>45205a79ddd62bc2237112a81c49070b</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56326/526811/openssl-1.0.2l.539874-windows64-539874.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/windows64/openssl-1.0.2u.315-windows64-315.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.2u.202200624</string>
+        <string>1.0.2u.315</string>
       </map>
       <key>zlib</key>
       <map>
@@ -216,18 +200,6 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>name</key>
             <string>darwin64</string>
           </map>
-          <key>linux</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>98a8c775c581ca80bb559e8b4e8eaae7</string>
-              <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/p64_3p-zlib/rev/314131/arch/Linux/installer/zlib-1.2.8.314131-linux-314131.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux</string>
-          </map>
           <key>linux64</key>
           <map>
             <key>archive</key>
@@ -247,9 +219,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ebdb07d4aaa5312005a8773f625032a4</string>
+              <string>23ba44e15affc13b15717f02d98ed61e</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55048/512031/zlib-1.2.8.538988-windows-538988.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/windows/zlib-1.2.11.308-windows-308.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -259,16 +233,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0ac95f3dece7d575ba45cf5728f53eea</string>
+              <string>b231c0fd98a151a66c890a4bb29cfea3</string>
+              <key>hash_algorithm</key>
+              <string>md5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/55047/512024/zlib-1.2.8.538988-windows64-538988.tar.bz2</string>
+              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/windows64/zlib-1.2.11.308-windows64-308.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.11.202200500</string>
+        <string>1.2.11.308</string>
       </map>
     </map>
     <key>package_description</key>
@@ -374,29 +350,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/release/libcurl.lib</string>
+            <string>lib/debug/*.*</string>
+            <string>lib/release/*.*</string>
           </array>
           <key>name</key>
           <string>windows</string>
-        </map>
-        <key>windows64</key>
-        <map>
-          <key>configurations</key>
-          <map>
-            <key>default</key>
-            <map>
-              <key>default</key>
-              <boolean>true</boolean>
-              <key>name</key>
-              <string>default</string>
-            </map>
-          </map>
-          <key>manifest</key>
-          <array>
-            <string>lib/release/libcurl.lib</string>
-          </array>
-          <key>name</key>
-          <string>windows64</string>
         </map>
       </map>
       <key>source_directory</key>

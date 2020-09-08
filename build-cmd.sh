@@ -124,24 +124,17 @@ case "$AUTOBUILD_PLATFORM" in
 
             if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
             then
-                debugtargetname=debug-VC-WIN32
-                releasetargetname=VC-WIN32
-                batname=do_nasm
+                targetarch=x86
             else
-                debugtargetname=debug-VC-WIN64A
-                releasetargetname=VC-WIN64A
-                batname=do_win64a
+                targetarch=x64
             fi
 
             pushd winbuild
+                # Debug target.  DLL for SSL, libcurl, nghttp2, and zlib
+                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=$targetarch DEBUG=yes
 
-                # Debug target.  DLL for SSL, static archives
-                # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=x64 DEBUG=yes
-
-                # Release target.  DLL for SSL, static archives
-                # for libcurl and zlib.  (Config created by Linden Lab)
-                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=x64 
+                # Release target.  DLL for SSL, libcurl, nghttp2, and zlib
+                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=$targetarch
             popd
 
             # conditionally run unit tests
@@ -154,21 +147,21 @@ case "$AUTOBUILD_PLATFORM" in
 
             # Stage archives
             mkdir -p "${stage}"/lib/{debug,release}
-            cp -a builds/libcurl-vc14-x64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/debug/
-            cp -a builds/libcurl-vc14-x64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/debug/
-            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/release/
-            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/release/
+            cp -a builds/libcurl-vc14-$targetarch-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/debug/
+            cp -a builds/libcurl-vc14-$targetarch-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/debug/
+            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/release/
+            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/release/
 
             # Stage curl.exe and provide .dll's it needs
             mkdir -p "${stage}"/bin
             cp -af "${stage}"/packages/lib/release/*.{dll,pdb} "${stage}"/bin/
             cp -af "${stage}"/lib/release/*.dll "${stage}"/bin/
             chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
-            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/curl.exe "${stage}"/bin/
+            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
-            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/include/curl/ "${stage}"/include/
+            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.

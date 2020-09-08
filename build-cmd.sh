@@ -100,7 +100,7 @@ get_installable_version ()
     # bash, so it becomes part of the string contents, which confuses both
     # scripted comparisons and human readers.
     python -c "from ast import literal_eval
-    print '.'.join(literal_eval(r'''$pydata''')['version'].split('.')[:${2:-}])" \
+print '.'.join(literal_eval(r'''$pydata''')['version'].split('.')[:${2:-}])" \
     | tr -d '\r'
     set -x
 }
@@ -116,65 +116,79 @@ mkdir -p "$CURL_BUILD_DIR"
 
 case "$AUTOBUILD_PLATFORM" in
     windows*)
-        pushd "$CURL_BUILD_DIR"
-        packages="$(cygpath -m "$stage/packages")"
-        load_vsvars
-        
-        cmake ../${CURL_SOURCE_DIR} -G"$AUTOBUILD_WIN_CMAKE_GEN" -DCMAKE_C_FLAGS:STRING="$LL_BUILD_RELEASE" \
-        -DCMAKE_CXX_FLAGS:STRING="$LL_BUILD_RELEASE" \
-        -DENABLE_THREADED_RESOLVER:BOOL=ON \
-        -DCMAKE_USE_OPENSSL:BOOL=TRUE \
-        -DUSE_NGHTTP2:BOOL=TRUE \
-        -DNGHTTP2_INCLUDE_DIR:FILEPATH="$packages/include" \
-        -DNGHTTP2_LIBRARY:FILEPATH="$packages/lib/release/nghttp2.lib" \
-        -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
-        
-        check_damage "$AUTOBUILD_PLATFORM"
-        
-        build_sln "CURL.sln" "Release|$AUTOBUILD_WIN_VSPLATFORM" "Install"
-        
-        # conditionally run unit tests
-        if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-            pushd tests
-            # Nothin' to do yet
-            
+        pushd "${CURL_SOURCE_DIR}"
+            load_vsvars
+
+            check_damage "$AUTOBUILD_PLATFORM"
+            packages="$(cygpath -m "$stage/packages")"
+
+            if [ "$AUTOBUILD_ADDRSIZE" = 32 ]
+            then
+                debugtargetname=debug-VC-WIN32
+                releasetargetname=VC-WIN32
+                batname=do_nasm
+            else
+                debugtargetname=debug-VC-WIN64A
+                releasetargetname=VC-WIN64A
+                batname=do_win64a
+            fi
+
+            pushd winbuild
+
+                # Debug target.  DLL for SSL, static archives
+                # for libcurl and zlib.  (Config created by Linden Lab)
+                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=x64 DEBUG=yes
+
+                # Release target.  DLL for SSL, static archives
+                # for libcurl and zlib.  (Config created by Linden Lab)
+                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=x64 
             popd
-        fi
-        
-        # Stage archives
-        mkdir -p "${stage}/lib/release"
-        mv "${stage}"/lib/libcurl.lib "${stage}"/lib/release/libcurl.lib
-        
-        #           # Stage curl.exe and provide .dll's it needs
-        #           mkdir -p "${stage}"/bin
-        cp -af "${stage}"/packages/lib/release/*.dll "${stage}"/bin/
-        chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
-        
-        # Run 'curl' as a sanity check. Capture just the first line, which
-        # should have versions of stuff.
-        curlout="$("${stage}"/bin/curl.exe --version | tr -d '\r' | head -n 1)"
-        # With -e in effect, any nonzero rc blows up the script --
-        # so plain 'expr str : pattern' asserts that str contains pattern.
-        # curl version - should be start of line
-        expr "$curlout" : "curl $(escape_dots "$version")" #> /dev/null
-        # libcurl/version
-        expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
-        # OpenSSL/version
-        expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
-        # zlib/version
-        expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
-        
-        #            # Clean
-        #            pushd lib
-        #                nmake /f Makefile.VC6 clean
-        #            popd
-        #            pushd src
-        #                nmake /f Makefile.VC6 clean
-        #            popd
-        
-        rm -rf "$CURL_BUILD_DIR"
-        
-        popd
+
+            # conditionally run unit tests
+            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                pushd tests
+                # Nothin' to do yet
+
+                popd
+            fi
+
+            # Stage archives
+            mkdir -p "${stage}"/lib/{debug,release}
+            cp -a builds/libcurl-vc14-x64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/debug/
+            cp -a builds/libcurl-vc14-x64-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/debug/
+            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/release/
+            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/release/
+
+            # Stage curl.exe and provide .dll's it needs
+            mkdir -p "${stage}"/bin
+            cp -af "${stage}"/packages/lib/release/*.{dll,pdb} "${stage}"/bin/
+            cp -af "${stage}"/lib/release/*.dll "${stage}"/bin/
+            chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
+            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/curl.exe "${stage}"/bin/
+
+            # Stage headers
+            mkdir -p "${stage}"/include
+            cp -a builds/libcurl-vc14-x64-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/include/curl/ "${stage}"/include/
+
+            # Run 'curl' as a sanity check. Capture just the first line, which
+            # should have versions of stuff.
+            curlout="$("${stage}"/bin/curl.exe --version | tr -d '\r' | head -n 1)"
+            # With -e in effect, any nonzero rc blows up the script --
+            # so plain 'expr str : pattern' asserts that str contains pattern.
+            # curl version - should be start of line
+            expr "$curlout" : "curl $(escape_dots "$version")" #> /dev/null
+            # libcurl/version
+            expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
+            # OpenSSL/version
+            expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
+            # zlib/version
+            expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
+            # nghttp2/version
+            expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
+
+            # Clean
+            rm -r builds
+            popd
     ;;
     
     darwin*)

@@ -55,17 +55,23 @@ CC = cl.exe
 
 !IF "$(VC)"=="6"
 CC_NODEBUG  = $(CC) /O2 /DNDEBUG
-CC_DEBUG    = $(CC) /Od /Gm /Zi /D_DEBUG /GZ
+CC_DEBUG    = $(CC) /Od /Gm /D_DEBUG /GZ
 CFLAGS     = /I. /I../lib /I../include /nologo /W3 /GX /DWIN32 /YX /FD /c /DBUILDING_LIBCURL
 !ELSE
-CC_NODEBUG  = $(CC) /O2 /DNDEBUG
-CC_DEBUG    = $(CC) /Od /D_DEBUG /RTC1 /Z7 /LDd /W3
+CC_NODEBUG  = $(CC) /O2 /Ob3 /Gy /GL /DNDEBUG
+CC_DEBUG    = $(CC) /Od /D_DEBUG /RTC1 /LDd /W3
 CFLAGS      = /I. /I ../lib /I../include /nologo /W3 /EHsc /DWIN32 /FD /c /DBUILDING_LIBCURL
 !ENDIF
 
 LFLAGS     = /nologo /machine:$(MACHINE)
 LNKDLL     = link.exe /DLL
 LNKLIB     = link.exe /lib
+
+!IF "$(DEBUG)"=="yes"
+LFLAGS     = $(LFLAGS)
+!ELSE
+LFLAGS     = $(LFLAGS) /OPT:REF /OPT:ICF /LTCG
+!ENDIF
 
 CFLAGS_PDB = /Zi
 LFLAGS_PDB = /incremental:no /opt:ref,icf
@@ -106,7 +112,11 @@ CURL_SRC_DIR = ..\src
 WITH_DEVEL          = ../../deps
 !ENDIF
 DEVEL_INCLUDE  = $(WITH_DEVEL)/include
-DEVEL_LIB      = $(WITH_DEVEL)/lib
+!IF "$(DEBUG)"=="yes"
+DEVEL_LIB      = $(WITH_DEVEL)/lib/debug
+!ELSE
+DEVEL_LIB      = $(WITH_DEVEL)/lib/release
+!ENDIF
 DEVEL_BIN      = $(WITH_DEVEL)/bin
 
 CFLAGS         = $(CFLAGS) /I"$(DEVEL_INCLUDE)"
@@ -174,17 +184,29 @@ CARES_CFLAGS   = /DUSE_ARES /I"$(DEVEL_INCLUDE)/cares"
 !ENDIF
 
 !IF "$(WITH_ZLIB)"=="dll"
+!IF "$(DEBUG)"=="yes"
+ZLIB_LIBS   = zlibd.lib
+!ELSE
 ZLIB_LIBS   = zlib.lib
+!ENDIF
 USE_ZLIB    = true
 ZLIB        = dll
 !ELSEIF "$(WITH_ZLIB)"=="static"
-ZLIB_LIBS   = zlib_a.lib
+!IF "$(DEBUG)"=="yes"
+ZLIB_LIBS   = zlibd.lib
+!ELSE
+ZLIB_LIBS   = zlib.lib
+!ENDIF
 USE_ZLIB    = true
 ZLIB        = static
 !ENDIF
 
 !IFDEF USE_ZLIB
-ZLIB_CFLAGS = /DHAVE_ZLIB_H /DHAVE_ZLIB /DHAVE_LIBZ
+ZLIB_CFLAGS = /DHAVE_ZLIB_H /DHAVE_ZLIB /DHAVE_LIBZ /I"$(DEVEL_INCLUDE)/zlib"
+!ENDIF
+
+!IF "$(WITH_ZLIB)"=="dll"
+ZLIB_CFLAGS = $(ZLIB_CFLAGS) /DZLIB_DLL
 !ENDIF
 
 
@@ -311,12 +333,12 @@ CURL_RC_FLAGS = /i../include /dDEBUGBUILD=0 /Fo $@ $(CURL_SRC_DIR)\curl.rc
 LNK       = $(LNKDLL) $(WIN_LIBS) /out:$(LIB_DIROBJ)\$(TARGET)
 !IF "$(DEBUG)"=="yes"
 TARGET    = $(LIB_NAME_DLL_DEBUG)
-LNK       = $(LNK) /DEBUG /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP_DEBUG)
+LNK       = $(LNK) /DEBUG:FULL /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP_DEBUG)
 PDB       = $(PDB_NAME_DLL_DEBUG)
 CURL_LIBS = /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP_DEBUG)
 !ELSE
 TARGET    = $(LIB_NAME_DLL)
-LNK       = $(LNK)  /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP)
+LNK       = $(LNK) /DEBUG:FULL /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP)
 PDB       = $(PDB_NAME_DLL)
 CURL_LIBS = /IMPLIB:$(LIB_DIROBJ)\$(LIB_NAME_IMP)
 !ENDIF

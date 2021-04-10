@@ -427,6 +427,3 @@ esac
 
 mkdir -p "$stage/LICENSES"
 cp "${CURL_SOURCE_DIR}"/COPYING "$stage/LICENSES/curl.txt"
-
-mkdir -p "$stage"/docs/curl/
-cp -a "$top"/README.Linden "$stage"/docs/curl/

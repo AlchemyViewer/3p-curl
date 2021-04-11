@@ -129,11 +129,11 @@ case "$AUTOBUILD_PLATFORM" in
             fi
 
             pushd winbuild
-                # Debug target.  DLL for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=$targetarch DEBUG=yes
+                # Debug target.  static for SSL, libcurl, nghttp2, and zlib
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch DEBUG=yes
 
-                # Release target.  DLL for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=dll VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=dll WITH_SSL=dll WITH_ZLIB=dll ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=yes MACHINE=$targetarch
+                # Release target.  static for SSL, libcurl, nghttp2, and zlib
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch
             popd
 
             # conditionally run unit tests
@@ -146,21 +146,16 @@ case "$AUTOBUILD_PLATFORM" in
 
             # Stage archives
             mkdir -p "${stage}"/lib/{debug,release}
-            cp -a builds/libcurl-vc14-$targetarch-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/debug/
-            cp -a builds/libcurl-vc14-$targetarch-debug-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/debug/
-            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/*.dll "${stage}"/lib/release/
-            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/lib/*.{lib,exp,pdb} "${stage}"/lib/release/
+            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
 
-            # Stage curl.exe and provide .dll's it needs
+            # Stage curl.exe
             mkdir -p "${stage}"/bin
-            cp -af "${stage}"/packages/lib/release/*.{dll,pdb} "${stage}"/bin/
-            cp -af "${stage}"/lib/release/*.dll "${stage}"/bin/
-            chmod +x-w "${stage}"/bin/*.dll   # correct package permissions
-            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/bin/curl.exe "${stage}"/bin/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
-            cp -a builds/libcurl-vc14-$targetarch-release-dll-ssl-dll-zlib-dll-ipv6-sspi-nghttp2-dll/include/curl/ "${stage}"/include/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.
@@ -173,8 +168,8 @@ case "$AUTOBUILD_PLATFORM" in
             expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
             # OpenSSL/version
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
-            # zlib/version
-            expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
+            # zlib/version - Disabled due to using zlib-ng in compat mode causing version mismatch between reported and actual
+            # expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib-ng 3)") zlib-ng" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
 

@@ -38,8 +38,7 @@ OPENSSL_INCLUDE="${stage}"/packages/include/openssl
 
 LIBCURL_VERSION_HEADER_DIR="${CURL_SOURCE_DIR}"/include/curl
 version=$(perl -ne 's/#define LIBCURL_VERSION "([^"]+)"/$1/ && print' "${LIBCURL_VERSION_HEADER_DIR}/curlver.h" | tr -d '\r' )
-build=${AUTOBUILD_BUILD_ID:=0}
-echo "${version}.${build}" > "${stage}/VERSION.txt"
+echo "${version}" > "${stage}/VERSION.txt"
 
 # Restore all .sos
 restore_sos ()

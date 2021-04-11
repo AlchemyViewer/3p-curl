@@ -5,6 +5,8 @@
     <map>
       <key>nghttp2</key>
       <map>
+        <key>canonical_repo</key>
+        <string>https://bitbucket.org/lindenlab/3p-nghttp2</string>
         <key>copyright</key>
         <string>Copyright (c) 2012, 2014, 2015, 2016 Tatsuhiro Tsujikawa
 Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
@@ -23,9 +25,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>95b69e37b9b4435698682f4ff702cca5</string>
+              <string>3de08e1e980e3f7c82d985e5535fb38d4d5582e7c50a69ad8505a395a4a90a98c60559f38ad032e005c0a3d18d9d395d</string>
+              <key>hash_algorithm</key>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/54855/510169/nghttp2-1.25.0.538985-darwin64-538985.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/91/packages/generic/nghttp2-797/1.43.0/nghttp2-1.43.0-darwin64-797.tar.xz</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -35,11 +39,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>aa902fcc428a59c9e61acd7021ee1482</string>
+              <string>7d584c8630ce6d171c653c282d960c81de7b9d8fb057ca95faf61076f72407f44a82e38b24ec301bf084fd9b4fd0cba5</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/linux64/debian10/nghttp2-1.41.0.202200516-linux64-202200516.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/91/packages/generic/nghttp2-797/1.43.0/nghttp2-1.43.0-linux64-797.tar.xz</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -49,11 +53,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ee3101bb435f757d60b137d8df370192</string>
+              <string>ccf9e12535b911104a56cee8c083f05358bb7a9689711c8bc7eb01a32bddbcda464bfd66098167ed2db8abad5b023023</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/windows/nghttp2-1.41.0.316-windows-316.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/91/packages/generic/nghttp2-797/1.43.0/nghttp2-1.43.0-windows-797.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -63,11 +67,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>750766106346e4eead713914411f9075</string>
+              <string>81b8f121bb32944081330746df62a24e99aa4c3d10d84d18fe508b8c132c91c84622a3abd065d0aff437827e38ef25f2</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/nghttp2/windows64/nghttp2-1.41.0.316-windows64-316.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/91/packages/generic/nghttp2-797/1.43.0/nghttp2-1.43.0-windows64-797.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -76,12 +80,14 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>source_type</key>
         <string>hg</string>
         <key>version</key>
-        <string>1.41.0.316</string>
+        <string>1.43.0</string>
       </map>
       <key>openssl</key>
       <map>
+        <key>canonical_repo</key>
+        <string>https://git.alchemyviewer.org/alchemy/thirdparty/3p-openssl</string>
         <key>copyright</key>
-        <string>Copyright (c) 1998-2018 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
+        <string>Copyright (c) 1998-2021 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
         <key>description</key>
         <string>Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) Library</string>
         <key>license</key>
@@ -92,54 +98,30 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <string>openssl</string>
         <key>platforms</key>
         <map>
-          <key>darwin</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>0a77d56769e6075957f614be6575423e</string>
-              <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/openssl_3p-update-openssl/rev/297168/arch/Darwin/installer/openssl-1.0.1h.297168-darwin-297168.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>darwin</string>
-          </map>
           <key>darwin64</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>18aef0c8fc471b6539addbdc019aea25</string>
+              <string>cade05f5a11f8bbe14896204ab07ee70c7879793e6a03a3c74c6a324e1d16b0fd29e4361d50077dbf9318c0df5fc53d9</string>
+              <key>hash_algorithm</key>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/56325/526804/openssl-1.0.2l.539874-darwin64-539874.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-801/0.0.801/openssl-1.0.2u.801-darwin64-801.tar.xz</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
-          </map>
-          <key>linux64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>a1048f56c334c5599efb60eab63815d0</string>
-              <key>hash_algorithm</key>
-              <string>md5</string>
-              <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/linux64/debian10/openssl-1.0.2u.202200624-linux64-202200624.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux64</string>
           </map>
           <key>windows</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c17dd910ba85c25186b6249c5f3a826c</string>
+              <string>5f9e7066fac143ad4ae973f63949c951780051a3c9be6b2d989ad21ad4c70bee93f53396115ba60dc463a75fe5d51d91</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/windows/openssl-1.0.2u.315-windows-315.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-801/0.0.801/openssl-1.0.2u.801-windows-801.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -149,53 +131,45 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>45205a79ddd62bc2237112a81c49070b</string>
+              <string>0d260cce7af583defc510b9166df29a25e86adc8bc31b45d6c6076dbf7a0661c6026a3cae4d7e5092e4d84794ee62839</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/openssl/windows64/openssl-1.0.2u.315-windows64-315.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-801/0.0.801/openssl-1.0.2u.801-windows64-801.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.2u.315</string>
+        <string>1.0.2u.801</string>
       </map>
-      <key>zlib</key>
+      <key>zlib-ng</key>
       <map>
+        <key>canonical_repo</key>
+        <string>https://git.alchemyviewer.org/alchemy/thirdparty/3p-zlib-ng</string>
         <key>copyright</key>
         <string>Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler</string>
         <key>description</key>
-        <string>Zlib Data Compression Library</string>
+        <string>zlib replacement with optimizations for next generation systems.</string>
         <key>license</key>
         <string>zlib</string>
         <key>license_file</key>
-        <string>LICENSES/zlib.txt</string>
+        <string>LICENSES/zlib-ng.txt</string>
         <key>name</key>
-        <string>zlib</string>
+        <string>zlib-ng</string>
         <key>platforms</key>
         <map>
-          <key>darwin</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>1a79eeac199c2d94e4ae4e5d0194e25f</string>
-              <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/zlib_3p-update-zlib/rev/296881/arch/Darwin/installer/zlib-1.2.8.296881-darwin-296881.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>darwin</string>
-          </map>
           <key>darwin64</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>9785bda5b4d3b41bf391b33d0da78c9e</string>
+              <string>6cf45c294fee94adf2d89ca062b2a5d1e5375049622f8acbcf6baadb2dc844627824d64f908b9a9b1eee52476e101b27</string>
+              <key>hash_algorithm</key>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/ct2/54858/510190/zlib-1.2.8.538988-darwin64-538988.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng-790/2.0.2/zlib_ng-2.0.2-darwin64-790.tar.xz</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -205,11 +179,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>5d7866be22eaca6d38cfd0bb4e411fb0</string>
+              <string>ddbf8628f172b1499063c8267e0288eeceb6c937bc62ea40a066822ce695dc85a27908cec509387f64a28accb232737d</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/linux64/debian10/zlib-1.2.11.202200500-linux64-202200500.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng-790/2.0.2/zlib_ng-2.0.2-linux64-790.tar.xz</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -219,11 +193,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>23ba44e15affc13b15717f02d98ed61e</string>
+              <string>e51e3e1b954a2d244471d2f5a0e089d08eff2276f88b606f0db09b461c2d7e288fb0df11b2966e88d6e5ba85d0432574</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/windows/zlib-1.2.11.308-windows-308.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng-790/2.0.2/zlib_ng-2.0.2-windows-790.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -233,18 +207,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>b231c0fd98a151a66c890a4bb29cfea3</string>
+              <string>ab17ba76615f4b0eed13e195c283d81e764adf36e2d3d91049a5379a65739aac607d2e3df228dc949d2dec4e38f87f70</string>
               <key>hash_algorithm</key>
-              <string>md5</string>
+              <string>sha3_384</string>
               <key>url</key>
-              <string>https://pkg.alchemyviewer.org/repository/autobuild-external/zlib/windows64/zlib-1.2.11.308-windows64-308.tar.bz2</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng-790/2.0.2/zlib_ng-2.0.2-windows64-790.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.11.308</string>
+        <string>2.0.2</string>
       </map>
     </map>
     <key>package_description</key>

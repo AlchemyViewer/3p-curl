@@ -58,8 +58,8 @@ CC_NODEBUG  = $(CC) /O2 /DNDEBUG
 CC_DEBUG    = $(CC) /Od /Gm /D_DEBUG /GZ
 CFLAGS     = /I. /I../lib /I../include /nologo /W3 /GX /DWIN32 /YX /FD /c /DBUILDING_LIBCURL
 !ELSE
-CC_NODEBUG  = $(CC) /O2 /Ob3 /Gy /GL /DNDEBUG
-CC_DEBUG    = $(CC) /Od /D_DEBUG /RTC1 /LDd /W3
+CC_NODEBUG  = $(CC) /O2 /Ob3 /Gy /Z7 /DNDEBUG
+CC_DEBUG    = $(CC) /Od /D_DEBUG /RTC1 /Z7 /LDd /W3
 CFLAGS      = /I. /I ../lib /I../include /nologo /W3 /EHsc /DWIN32 /FD /c /DBUILDING_LIBCURL
 !ENDIF
 
@@ -70,7 +70,7 @@ LNKLIB     = link.exe /lib
 !IF "$(DEBUG)"=="yes"
 LFLAGS     = $(LFLAGS)
 !ELSE
-LFLAGS     = $(LFLAGS) /OPT:REF /OPT:ICF /LTCG
+LFLAGS     = $(LFLAGS) /OPT:REF /OPT:ICF
 !ENDIF
 
 CFLAGS_PDB = /Zi
@@ -150,7 +150,7 @@ NGHTTP2_CFLAGS   = /DUSE_NGHTTP2
 NGHTTP2_LIBS     = nghttp2.lib
 !ELSEIF "$(WITH_NGHTTP2)"=="static"
 NGHTTP2_CFLAGS   = /DUSE_NGHTTP2 /DNGHTTP2_STATICLIB
-NGHTTP2_LIBS     = nghttp2_static.lib
+NGHTTP2_LIBS     = nghttp2.lib
 !ENDIF
 
 !IF "$(WITH_MBEDTLS)"=="dll" || "$(WITH_MBEDTLS)"=="static"

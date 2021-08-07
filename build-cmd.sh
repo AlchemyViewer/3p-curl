@@ -81,7 +81,7 @@ get_installable_version ()
     # bash, so it becomes part of the string contents, which confuses both
     # scripted comparisons and human readers.
     python -c "from ast import literal_eval
-print '.'.join(literal_eval(r'''$pydata''')['version'].split('.')[:${2:-}])" \
+print('.'.join(literal_eval(r'''$pydata''')['version'].split('.')[:${2:-}]))" \
     | tr -d '\r'
     set -x
 }

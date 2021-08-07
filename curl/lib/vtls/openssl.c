@@ -152,6 +152,16 @@ static unsigned long OpenSSL_version_num(void)
 #define OSSL_PACKAGE "OpenSSL"
 #endif
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+/* up2date versions of OpenSSL maintain the default reasonably secure without
+ * breaking compatibility, so it is better not to override the default by curl
+ */
+#define DEFAULT_CIPHER_SELECTION NULL
+#else
+/* ... but it is not the case with old versions of OpenSSL */
+#define DEFAULT_CIPHER_SELECTION \
+  "ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH"
+#endif
 /*
  * Number of bytes to read from the random number seed file. This must be
  * a finite value (because some entropy "files" like /dev/urandom have
@@ -2090,11 +2100,13 @@ static CURLcode ossl_connect_step1(struct connectdata *conn, int sockindex)
   ciphers = SSL_CONN_CONFIG(cipher_list);
   if(!ciphers)
     ciphers = (char *)DEFAULT_CIPHER_SELECTION;
-  if(!SSL_CTX_set_cipher_list(connssl->ctx, ciphers)) {
-    failf(data, "failed setting cipher list: %s", ciphers);
-    return CURLE_SSL_CIPHER;
+  if(ciphers) {
+    if(!SSL_CTX_set_cipher_list(connssl->ctx, ciphers)) {
+      failf(data, "failed setting cipher list: %s", ciphers);
+      return CURLE_SSL_CIPHER;
+    }
+    infof(data, "Cipher selection: %s\n", ciphers);
   }
-  infof(data, "Cipher selection: %s\n", ciphers);
 
 #ifdef USE_TLS_SRP
   if(ssl_authtype == CURL_TLSAUTH_SRP) {

@@ -147,8 +147,8 @@ pushd "$CURL_SOURCE_DIR"
             expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
             # OpenSSL/version
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
-            # zlib/version - Disabled due to using zlib-ng in compat mode causing version mismatch between reported and actual
-            # expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib-ng 3)") zlib-ng" > /dev/null
+            # zlib/version
+            expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
 
@@ -426,7 +426,7 @@ pushd "$CURL_SOURCE_DIR"
             # OpenSSL/version
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
             # zlib/version
-            expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
+            expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
             # nghttp2/versionx
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             
@@ -468,7 +468,7 @@ pushd "$CURL_SOURCE_DIR"
             # OpenSSL/version
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
             # zlib/version
-            expr "$curlout" : ".* zlib/$(escape_dots "$(get_installable_version zlib 3)")" > /dev/null
+            expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             

@@ -194,7 +194,7 @@ pushd "$CURL_SOURCE_DIR"
                 CXXFLAGS="$DEBUG_CXXFLAGS" \
                 CPPFLAGS="$DEBUG_CPPFLAGS" \
                 LDFLAGS="$DEBUG_LDFLAGS" \
-                cmake .. -GXcode -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS:BOOL=OFF \
+                cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS:BOOL=OFF \
                     -DCMAKE_C_FLAGS="$DEBUG_CFLAGS" \
                     -DCMAKE_CXX_FLAGS="$DEBUG_CXXFLAGS" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="0" \
@@ -254,7 +254,7 @@ pushd "$CURL_SOURCE_DIR"
                 CXXFLAGS="$RELEASE_CXXFLAGS" \
                 CPPFLAGS="$RELEASE_CPPFLAGS" \
                 LDFLAGS="$RELEASE_LDFLAGS" \
-                cmake .. -GXcode -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=OFF \
+                cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=OFF \
                     -DCMAKE_C_FLAGS="$RELEASE_CFLAGS" \
                     -DCMAKE_CXX_FLAGS="$RELEASE_CXXFLAGS" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="3" \

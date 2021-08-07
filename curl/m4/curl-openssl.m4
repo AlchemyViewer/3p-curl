@@ -66,6 +66,7 @@ AC_DEFUN([CURL_CHECK_OPENSSL_API_HEADERS], [
         ;;
     esac
     case $tst_api in
+      0x111) tst_show="1.1.1" ;;
       0x110) tst_show="1.1.0" ;;
       0x102) tst_show="1.0.2" ;;
       0x101) tst_show="1.0.1" ;;
@@ -121,6 +122,13 @@ AC_DEFUN([CURL_CHECK_OPENSSL_API_LIBRARY], [
   tst_api="unknown"
   #
   AC_MSG_CHECKING([for OpenSSL library version])
+  if test "$tst_api" = "unknown"; then
+    AC_LINK_IFELSE([
+      AC_LANG_FUNC_LINK_TRY([ERR_clear_last_mark])
+    ],[
+      tst_api="0x111"
+    ])
+  fi
   if test "$tst_api" = "unknown"; then
     case $host in
       *-*-vms*)
@@ -217,6 +225,7 @@ AC_DEFUN([CURL_CHECK_OPENSSL_API_LIBRARY], [
     ])
   fi
   case $tst_api in
+    0x111) tst_show="1.1.1" ;;
     0x110) tst_show="1.1.0" ;;
     0x102) tst_show="1.0.2" ;;
     0x101) tst_show="1.0.1" ;;

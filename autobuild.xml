@@ -103,11 +103,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>453d6bfcbb9f14e09294846d5ab2d709cf3fc1207df40927b6297e092075985a6871657b58c7ac43e2e0cb5fa4904671</string>
+              <string>e42790fcd15daedb83eca89bad4bb5feb4454f873f489a9ff6485465603a16a33938bb3a40cd9c160dd3a55a784eff43</string>
               <key>hash_algorithm</key>
               <string>sha3_384</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-942/0.0.942/openssl-1.0.2u.942-darwin64-942.tar.xz</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1k.1083/openssl-1.1.1k-darwin64-1083.tar.xz</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -117,11 +117,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>a716d9c116b09aedd33e6f45904fd11d4b6c22a03a54aa4a06207f03804cd2467e8929a61cd8bc36cc563c894ae0c859</string>
+              <string>9af0ab34f7deb4aa1d3188ce4da45c75e6974c17665a61a10d58030b3b8e994c166cbb3f6b1db3ff6b519f0fb51a24cd</string>
               <key>hash_algorithm</key>
               <string>sha3_384</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-942/0.0.942/openssl-1.0.2u.942-linux64-942.tar.xz</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1k.1083/openssl-1.1.1k-linux64-1083.tar.xz</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -131,11 +131,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>265812cf118b04fae2c4f588b2b42669030ab666d8946a9273bfdd8a1f52e8deff1449b9f59255ca09cea17c081babb7</string>
+              <string>4c74b8eda48f3df42bbf8fd700aec569265a7fce49b2af51aa67e9d395f4bbe21965ad59870e0d268863cd69cd8a5d8f</string>
               <key>hash_algorithm</key>
               <string>sha3_384</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-942/0.0.942/openssl-1.0.2u.942-windows-942.tar.xz</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1k.1083/openssl-1.1.1k-windows-1083.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -145,18 +145,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>8833a796b29bc62fa340fd51f8e6492a595d370827d6dbc099276bad2e89fb3bea43e8fedffc3987928b5710b2b69680</string>
+              <string>f7abae884f9414f7b30f2a00e6736e3cfb83f90dfa23f07aaf0fd3d31c9e08ec3ae550a8f966cc1146899eb783848904</string>
               <key>hash_algorithm</key>
               <string>sha3_384</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl-942/0.0.942/openssl-1.0.2u.942-windows64-942.tar.xz</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1k.1083/openssl-1.1.1k-windows64-1083.tar.xz</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.0.2u.942</string>
+        <string>1.1.1k</string>
       </map>
       <key>zlib-ng</key>
       <map>

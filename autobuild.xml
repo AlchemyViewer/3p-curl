@@ -3,6 +3,40 @@
 <map>
     <key>installables</key>
     <map>
+      <key>brotli</key>
+      <map>
+        <key>canonical_repo</key>
+        <string>https://git.alchemyviewer.org/alchemy/thirdparty/3p-brotli</string>
+        <key>copyright</key>
+        <string>Copyright (c) 2009, 2010, 2013-2016 by the Brotli Authors.</string>
+        <key>description</key>
+        <string>Brotli is a generic-purpose lossless compression algorithm that compresses data using a combination of a modern variant of the LZ77 algorithm, Huffman coding and 2nd order context modeling.</string>
+        <key>license</key>
+        <string>MIT</string>
+        <key>license_file</key>
+        <string>LICENSES/brotli.txt</string>
+        <key>name</key>
+        <string>brotli</string>
+        <key>platforms</key>
+        <map>
+          <key>windows64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>d6772d6aa4a80ca5794ee0545d4e1e5d450695015ca6d0cbda8e8f3801967abe88d98bc75b75c61a3f2e88aee2cb6e5d3d6df30fc7423a6f8bad7a79e12689b1</string>
+              <key>hash_algorithm</key>
+              <string>blake2b</string>
+              <key>url</key>
+              <string>https://git.alchemyviewer.org/api/v4/projects/179/packages/generic/brotli/1.0.9.1374/brotli-1.0.9-windows64-1374.tar.zst</string>
+            </map>
+            <key>name</key>
+            <string>windows64</string>
+          </map>
+        </map>
+        <key>version</key>
+        <string>1.0.9</string>
+      </map>
       <key>nghttp2</key>
       <map>
         <key>canonical_repo</key>
@@ -191,6 +225,40 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         </map>
         <key>version</key>
         <string>2.0.6</string>
+      </map>
+      <key>zstd</key>
+      <map>
+        <key>canonical_repo</key>
+        <string>https://git.alchemyviewer.org/alchemy/thirdparty/3p-zstd</string>
+        <key>copyright</key>
+        <string>Copyright (c) 2016-present, Facebook, Inc. All rights reserved.</string>
+        <key>description</key>
+        <string>Zstandard - Fast real-time compression algorithm</string>
+        <key>license</key>
+        <string>BSD</string>
+        <key>license_file</key>
+        <string>LICENSES/zstd.txt</string>
+        <key>name</key>
+        <string>zstd</string>
+        <key>platforms</key>
+        <map>
+          <key>windows64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>c9eb01e771792e435f86c976885c246d183884f4b99e6d0d4116a5a93d626fc3f7372e480d64c7f05dbb3d2be386d973bce24fad37632e1665b5b40eff9c0f57</string>
+              <key>hash_algorithm</key>
+              <string>blake2b</string>
+              <key>url</key>
+              <string>https://git.alchemyviewer.org/api/v4/projects/178/packages/generic/zstd/1.5.1.1375/zstd-1.5.1-windows64-1375.tar.zst</string>
+            </map>
+            <key>name</key>
+            <string>windows64</string>
+          </map>
+        </map>
+        <key>version</key>
+        <string>1.5.1</string>
       </map>
     </map>
     <key>package_description</key>

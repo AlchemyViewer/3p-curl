@@ -211,7 +211,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES -DCMAKE_INSTALL_PREFIX=$stage \
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
-                    -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_USE_OPENSSL:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
@@ -271,7 +271,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES -DCMAKE_INSTALL_PREFIX=$stage \
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
-                    -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_USE_OPENSSL:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \

@@ -193,7 +193,7 @@ CARES_INC_DIR  = $(CARES_PATH)\include
 CARES_LIB_DIR  = $(CARES_PATH)\lib
 CARES_LFLAGS   = $(CARES_LFLAGS) "/LIBPATH:$(CARES_LIB_DIR)"
 !ELSE
-CARES_INC_DIR  = $(DEVEL_INCLUDE)/cares
+CARES_INC_DIR  = $(DEVEL_INCLUDE)
 CARES_LIB_DIR  = $(DEVEL_LIB)
 !ENDIF
 
@@ -207,9 +207,9 @@ USE_CARES      = true
 CARES          = dll
 !ELSEIF "$(WITH_CARES)"=="static"
 !IF "$(DEBUG)"=="yes"
-CARES_LIBS     = libcaresd.lib
+CARES_LIBS     = libcaresd.lib Iphlpapi.lib
 !ELSE
-CARES_LIBS     = libcares.lib
+CARES_LIBS     = libcares.lib Iphlpapi.lib
 !ENDIF
 USE_CARES      = true
 CARES          = static

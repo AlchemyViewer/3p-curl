@@ -250,6 +250,63 @@ ZLIB        = static
 ZLIB_CFLAGS = /DHAVE_ZLIB_H /DHAVE_ZLIB /DHAVE_LIBZ $(ADDITIONAL_ZLIB_CFLAGS) /I"$(ZLIB_INC_DIR)"
 !ENDIF
 
+BROTLI_INC_DIR = "$(DEVEL_INCLUDE)/brotli"
+BROTLI_LIB_DIR = $(DEVEL_LIB)
+
+!IF "$(WITH_BROTLI)"=="dll"
+!IF "$(DEBUG)"=="yes"
+BROTLI_LIBS   = brotlicommon.lib brotlidec.lib brotliencc.lib
+!ELSE
+BROTLI_LIBS   = brotlicommon.lib brotlidec.lib brotliencc.lib
+!ENDIF
+
+ADDITIONAL_BROTLI_CFLAGS = "/DBROTLI_SHARED_COMPILATION=1 /DBROTLICOMMON_SHARED_COMPILATION=1 /DBROTLIDEC_SHARED_COMPILATION=1 /DBROTLIENC_SHARED_COMPILATION=1"
+
+USE_BROTLI    = true
+BROTLI        = dll
+!ELSEIF "$(WITH_BROTLI)"=="static"
+!IF "$(DEBUG)"=="yes"
+BROTLI_LIBS   = brotlicommon-static.lib brotlidec-static.lib brotlienc-static.lib
+!ELSE
+BROTLI_LIBS   = brotlicommon-static.lib brotlidec-static.lib brotlienc-static.lib
+!ENDIF
+
+USE_BROTLI    = true
+BROTLI        = static
+!ENDIF
+
+!IFDEF USE_BROTLI
+BROTLI_CFLAGS = /DHAVE_BROTLI $(ADDITIONAL_BROTLI_CFLAGS) /I"$(BROTLI_INC_DIR)"
+!ENDIF
+
+ZSTD_INC_DIR = "$(DEVEL_INCLUDE)"
+ZSTD_LIB_DIR = $(DEVEL_LIB)
+
+!IF "$(WITH_ZSTD)"=="dll"
+!IF "$(DEBUG)"=="yes"
+ZSTD_LIBS   = zstd.lib
+!ELSE
+ZSTD_LIBS   = zstd.lib
+!ENDIF
+
+ADDITIONAL_ZSTD_CFLAGS = "/DZSTD_DLL_IMPORT=1"
+
+USE_ZSTD    = true
+ZSTD        = dll
+!ELSEIF "$(WITH_ZSTD)"=="static"
+!IF "$(DEBUG)"=="yes"
+ZSTD_LIBS   = zstd_static.lib
+!ELSE
+ZSTD_LIBS   = zstd_static.lib
+!ENDIF
+
+USE_ZSTD    = true
+ZSTD        = static
+!ENDIF
+
+!IFDEF USE_ZSTD
+ZSTD_CFLAGS = /DHAVE_ZSTD_H /DHAVE_ZSTD $(ADDITIONAL_ZSTD_CFLAGS) /I"$(ZSTD_INC_DIR)"
+!ENDIF
 
 !IFDEF SSH2_PATH
 SSH2_INC_DIR= $(SSH2_PATH)\include
@@ -438,6 +495,16 @@ CFLAGS = $(CFLAGS) $(ZLIB_CFLAGS)
 LFLAGS = $(LFLAGS) $(ZLIB_LFLAGS) $(ZLIB_LIBS)
 !ENDIF
 
+!IF "$(USE_BROTLI)"=="true"
+CFLAGS = $(CFLAGS) $(BROTLI_CFLAGS)
+LFLAGS = $(LFLAGS) $(BROTLI_LFLAGS) $(BROTLI_LIBS)
+!ENDIF
+
+!IF "$(USE_ZSTD)"=="true"
+CFLAGS = $(CFLAGS) $(ZSTD_CFLAGS)
+LFLAGS = $(LFLAGS) $(ZSTD_LFLAGS) $(ZSTD_LIBS)
+!ENDIF
+
 !IF "$(USE_SSH2)"=="true"
 CFLAGS = $(CFLAGS) $(SSH2_CFLAGS)
 LFLAGS = $(LFLAGS) $(SSH2_LFLAGS) $(SSH2_LIBS)
@@ -516,6 +583,8 @@ $(TARGET): $(LIB_OBJS) $(LIB_DIROBJ) $(DIRDIST)
 	@echo Using c-ares: $(USE_CARES)
 	@echo Using SSH2: $(USE_SSH2)
 	@echo Using ZLIB: $(USE_ZLIB)
+	@echo Using BROTLI: $(USE_BROTLI)
+	@echo Using ZSTD: $(USE_ZSTD)
 	@echo Using IDN:  $(USE_IDN)
 	@echo Using IPv6: $(USE_IPV6)
 	@echo Using SSPI: $(USE_SSPI)

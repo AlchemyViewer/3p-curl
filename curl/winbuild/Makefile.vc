@@ -170,6 +170,22 @@ USE_ZLIB = true
 ZLIB     = static
 !ENDIF
 
+!IF "$(WITH_BROTLI)"=="dll"
+USE_BROTLI = true
+BROTLI     = dll
+!ELSEIF "$(WITH_BROTLI)"=="static"
+USE_BROTLI = true
+BROTLI     = static
+!ENDIF
+
+!IF "$(WITH_ZSTD)"=="dll"
+USE_ZSTD = true
+ZSTD     = dll
+!ELSEIF "$(WITH_ZSTD)"=="static"
+USE_ZSTD = true
+ZSTD     = static
+!ENDIF
+
 !IF "$(WITH_SSH2)"=="dll"
 USE_SSH2 = true
 SSH2     = dll
@@ -206,6 +222,14 @@ CONFIG_NAME_LIB = $(CONFIG_NAME_LIB)-cares-$(CARES)
 
 !IF "$(USE_ZLIB)"=="true"
 CONFIG_NAME_LIB = $(CONFIG_NAME_LIB)-zlib-$(ZLIB)
+!ENDIF
+
+!IF "$(USE_BROTLI)"=="true"
+CONFIG_NAME_LIB = $(CONFIG_NAME_LIB)-brotli-$(BROTLI)
+!ENDIF
+
+!IF "$(USE_ZSTD)"=="true"
+CONFIG_NAME_LIB = $(CONFIG_NAME_LIB)-zstd-$(ZSTD)
 !ENDIF
 
 !IF "$(USE_SSH2)"=="true"

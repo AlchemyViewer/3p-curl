@@ -231,7 +231,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/install_debug/bin/curld --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/install_debug/bin/curl --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line

@@ -109,10 +109,10 @@ pushd "$CURL_SOURCE_DIR"
 
             pushd winbuild
                 # Debug target.  static for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_ZSTD=static WITH_BROTLI=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch DEBUG=yes
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch DEBUG=yes
 
                 # Release target.  static for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_ZSTD=static WITH_BROTLI=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch
             popd
 
             # conditionally run unit tests
@@ -125,16 +125,16 @@ pushd "$CURL_SOURCE_DIR"
 
             # Stage archives
             mkdir -p "${stage}"/lib/{debug,release}
-            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
+            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
 
             # Stage curl.exe
             mkdir -p "${stage}"/bin
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.

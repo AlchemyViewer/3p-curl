@@ -211,20 +211,36 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64 \
                     -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
-                    -DCMAKE_MACOSX_RPATH=YES -DCMAKE_INSTALL_PREFIX=$stage \
-                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
-                    -DCURL_USE_OPENSSL:BOOL=TRUE \
+                    -DCMAKE_MACOSX_RPATH=YES \
+                    -DCMAKE_INSTALL_PREFIX="$stage" \
+                    -DCMAKE_INSTALL_LIBDIR="$stage/lib/debug" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
+                    -DENABLE_ARES:BOOL=ON \
+                    -DCURL_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_DICT=ON \
+                    -DCURL_DISABLE_FTP=ON \
+                    -DCURL_DISABLE_GOPHER=ON \
+                    -DCURL_DISABLE_IMAP=ON \
+                    -DCURL_DISABLE_LDAP=ON \
+                    -DCURL_DISABLE_LDAPS=ON \
+                    -DCURL_DISABLE_MQTT=ON \
+                    -DCURL_DISABLE_POP3=ON \
+                    -DCURL_DISABLE_RTSP=ON \
+                    -DCURL_DISABLE_SMB=ON \
+                    -DCURL_DISABLE_SMTP=ON \
+                    -DCURL_DISABLE_TELNET=ON \
+                    -DCURL_DISABLE_TFTP=ON \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/debug/libcrypto.a;${stage}/packages/lib/debug/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DCARES_LIBRARY="${stage}/packages/lib/debug/libcares.a" \
+                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
 
                 cmake --build . --config Debug
-                
-                mkdir -p "${stage}/install_debug"
-                cmake --install . --config Debug --prefix "${stage}/install_debug"
+                cmake --install . --config Debug
 
                 # conditionally run unit tests
                 if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
@@ -233,7 +249,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/install_debug/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/bin/curl --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -246,8 +262,6 @@ pushd "$CURL_SOURCE_DIR"
                 expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
-
-                cp -a ${stage}/install_debug/lib/libcurld.a "${stage}/lib/debug/libcurl.a"
             popd
 
             mkdir -p "build_release"
@@ -271,20 +285,36 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64 \
                     -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
-                    -DCMAKE_MACOSX_RPATH=YES -DCMAKE_INSTALL_PREFIX=$stage \
-                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
-                    -DCURL_USE_OPENSSL:BOOL=TRUE \
+                    -DCMAKE_MACOSX_RPATH=YES \
+                    -DCMAKE_INSTALL_PREFIX="$stage" \
+                    -DCMAKE_INSTALL_LIBDIR="$stage/lib/release" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
+                    -DENABLE_ARES:BOOL=ON \
+                    -DCURL_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_DICT=ON \
+                    -DCURL_DISABLE_FTP=ON \
+                    -DCURL_DISABLE_GOPHER=ON \
+                    -DCURL_DISABLE_IMAP=ON \
+                    -DCURL_DISABLE_LDAP=ON \
+                    -DCURL_DISABLE_LDAPS=ON \
+                    -DCURL_DISABLE_MQTT=ON \
+                    -DCURL_DISABLE_POP3=ON \
+                    -DCURL_DISABLE_RTSP=ON \
+                    -DCURL_DISABLE_SMB=ON \
+                    -DCURL_DISABLE_SMTP=ON \
+                    -DCURL_DISABLE_TELNET=ON \
+                    -DCURL_DISABLE_TFTP=ON \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DCARES_LIBRARY="${stage}/packages/lib/release/libcares.a" \
+                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
 
                 cmake --build . --config Release
-
-                mkdir -p "${stage}/install_debug"
-                cmake --install . --config Release --prefix "${stage}/install_release"
+                cmake --install . --config Release
 
                 # conditionally run unit tests
                 if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
@@ -293,7 +323,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/install_release/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/bin/curl --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -306,10 +336,6 @@ pushd "$CURL_SOURCE_DIR"
                 expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
-
-                cp -a ${stage}/install_release/lib/libcurl.a "${stage}/lib/release/libcurl.a"
-
-                cp -a ${stage}/install_release/include/curl/* "$stage/include/curl"
             popd
             #cp "$NGHTTP2_VERSION_HEADER_DIR"/*.h "$stage/include/nghttp2/"
         ;;

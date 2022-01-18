@@ -37,6 +37,42 @@
         <key>version</key>
         <string>1.0.9</string>
       </map>
+      <key>c-ares</key>
+      <map>
+        <key>canonical_repo</key>
+        <string>https://git.alchemyviewer.org/alchemy/thirdparty/3p-c-ares</string>
+        <key>copyright</key>
+        <string>Copyright (c) 1996 - 2018, Daniel Stenberg, (daniel@haxx.se), and many contributors</string>
+        <key>description</key>
+        <string>Library for transferring data specified with URL syntax</string>
+        <key>license</key>
+        <string>curl</string>
+        <key>license_file</key>
+        <string>LICENSES/c-ares.txt</string>
+        <key>name</key>
+        <string>c-ares</string>
+        <key>platforms</key>
+        <map>
+          <key>windows64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>056ca765dd02767cf35521a495436d14b02dbec0a2fd5cd3350d535f05349ff4c92e2001da24656da071f9ed0aef1dcef97db89fddb78a9fe37246d6d83b2e0a</string>
+              <key>hash_algorithm</key>
+              <string>blake2b</string>
+              <key>url</key>
+              <string>https://git.alchemyviewer.org/api/v4/projects/177/packages/generic/c-ares/1.18.1.1371/c_ares-1.18.1-windows64-1371.tar.zst</string>
+            </map>
+            <key>name</key>
+            <string>windows64</string>
+          </map>
+        </map>
+        <key>source_type</key>
+        <string>git</string>
+        <key>version</key>
+        <string>1.18.1</string>
+      </map>
       <key>nghttp2</key>
       <map>
         <key>canonical_repo</key>

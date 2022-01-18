@@ -125,16 +125,16 @@ pushd "$CURL_SOURCE_DIR"
 
             # Stage archives
             mkdir -p "${stage}"/lib/{debug,release}
-            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
+            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
 
             # Stage curl.exe
             mkdir -p "${stage}"/bin
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-brotli-static-zstd-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.
@@ -149,6 +149,8 @@ pushd "$CURL_SOURCE_DIR"
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
             # zlib/version
             expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
+            #  c-ares/version
+            expr "$curlout" : ".* c-ares/$(escape_dots "$(get_installable_version c-ares 3)")" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
 

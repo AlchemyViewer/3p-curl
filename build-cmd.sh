@@ -424,7 +424,7 @@ pushd "$CURL_SOURCE_DIR"
             ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no --enable-threaded-resolver \
             --enable-cookies --disable-ldap --disable-ldaps  --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/debug" \
-            --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
+            --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
 
             make -j$JOBS
             make install DESTDIR="$stage"
@@ -472,7 +472,7 @@ pushd "$CURL_SOURCE_DIR"
             ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no --enable-threaded-resolver \
             --enable-cookies --disable-ldap --disable-ldaps --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/release" \
-            --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
+            --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
 
             make -j$JOBS
             make install DESTDIR="$stage"

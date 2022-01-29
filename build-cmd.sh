@@ -170,35 +170,37 @@ pushd "$CURL_SOURCE_DIR"
             # Setup osx sdk platform
             SDKNAME="macosx"
             export SDKROOT=$(xcodebuild -version -sdk ${SDKNAME} Path)
-            export MACOSX_DEPLOYMENT_TARGET=10.15
+
+            # Deploy Targets
+            X86_DEPLOY=10.15
+            ARM64_DEPLOY=11.0
 
             # Setup build flags
-            ARCH_FLAGS="-arch x86_64"
-            SDK_FLAGS="-mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} -isysroot ${SDKROOT}"
-            DEBUG_COMMON_FLAGS="$ARCH_FLAGS $SDK_FLAGS -Og -g -msse4.2 -fPIC -DPIC"
-            RELEASE_COMMON_FLAGS="$ARCH_FLAGS $SDK_FLAGS -O3 -g -msse4.2 -fPIC -DPIC -fstack-protector-strong"
+            ARCH_FLAGS_X86="-arch x86_64 -mmacosx-version-min=${X86_DEPLOY} -isysroot ${SDKROOT} -msse4.2"
+            ARCH_FLAGS_ARM64="-arch arm64 -mmacosx-version-min=${ARM64_DEPLOY} -isysroot ${SDKROOT}"
+            DEBUG_COMMON_FLAGS="-O0 -g -fPIC -DPIC"
+            RELEASE_COMMON_FLAGS="-O3 -g -fPIC -DPIC -fstack-protector-strong"
             DEBUG_CFLAGS="$DEBUG_COMMON_FLAGS"
             RELEASE_CFLAGS="$RELEASE_COMMON_FLAGS"
             DEBUG_CXXFLAGS="$DEBUG_COMMON_FLAGS -std=c++17"
             RELEASE_CXXFLAGS="$RELEASE_COMMON_FLAGS -std=c++17"
             DEBUG_CPPFLAGS="-DPIC"
             RELEASE_CPPFLAGS="-DPIC"
-            DEBUG_LDFLAGS="$ARCH_FLAGS $SDK_FLAGS -Wl,-headerpad_max_install_names"
-            RELEASE_LDFLAGS="$ARCH_FLAGS $SDK_FLAGS -Wl,-headerpad_max_install_names"
+            DEBUG_LDFLAGS="-Wl,-headerpad_max_install_names"
+            RELEASE_LDFLAGS="-Wl,-headerpad_max_install_names"
 
-            mkdir -p "$stage/include/curl"
-            mkdir -p "$stage/lib/debug"
-            mkdir -p "$stage/lib/release"
+            # x86 Deploy Target
+            export MACOSX_DEPLOYMENT_TARGET=${X86_DEPLOY}
 
-            mkdir -p "build_debug"
-            pushd "build_debug"
-                CFLAGS="$DEBUG_CFLAGS" \
-                CXXFLAGS="$DEBUG_CXXFLAGS" \
+            mkdir -p "build_debug_x86"
+            pushd "build_debug_x86"
+                CFLAGS="$ARCH_FLAGS_X86 $DEBUG_CFLAGS" \
+                CXXFLAGS="$ARCH_FLAGS_X86 $DEBUG_CXXFLAGS" \
                 CPPFLAGS="$DEBUG_CPPFLAGS" \
-                LDFLAGS="$DEBUG_LDFLAGS" \
+                LDFLAGS="$ARCH_FLAGS_X86 $DEBUG_LDFLAGS" \
                 cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS:BOOL=OFF \
-                    -DCMAKE_C_FLAGS="$DEBUG_CFLAGS" \
-                    -DCMAKE_CXX_FLAGS="$DEBUG_CXXFLAGS" \
+                    -DCMAKE_C_FLAGS="$ARCH_FLAGS_X86 $DEBUG_CFLAGS" \
+                    -DCMAKE_CXX_FLAGS="$ARCH_FLAGS_X86 $DEBUG_CXXFLAGS" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="0" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_FAST_MATH=NO \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS=YES \
@@ -212,8 +214,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
-                    -DCMAKE_INSTALL_PREFIX="$stage" \
-                    -DCMAKE_INSTALL_LIBDIR="$stage/lib/debug" \
+                    -DCMAKE_INSTALL_PREFIX="$stage/debug_x86" \
                     -DENABLE_THREADED_RESOLVER:BOOL=OFF \
                     -DENABLE_ARES:BOOL=ON \
                     -DCURL_USE_OPENSSL:BOOL=ON \
@@ -249,7 +250,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/debug_x86/bin/curl --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -264,15 +265,15 @@ pushd "$CURL_SOURCE_DIR"
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd
 
-            mkdir -p "build_release"
-            pushd "build_release"
-                CFLAGS="$RELEASE_CFLAGS" \
-                CXXFLAGS="$RELEASE_CXXFLAGS" \
+            mkdir -p "build_release_x86"
+            pushd "build_release_x86"
+                CFLAGS="$ARCH_FLAGS_X86 $RELEASE_CFLAGS" \
+                CXXFLAGS="$ARCH_FLAGS_X86 $RELEASE_CXXFLAGS" \
                 CPPFLAGS="$RELEASE_CPPFLAGS" \
-                LDFLAGS="$RELEASE_LDFLAGS" \
+                LDFLAGS="$ARCH_FLAGS_X86 $RELEASE_LDFLAGS" \
                 cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=OFF \
-                    -DCMAKE_C_FLAGS="$RELEASE_CFLAGS" \
-                    -DCMAKE_CXX_FLAGS="$RELEASE_CXXFLAGS" \
+                    -DCMAKE_C_FLAGS="$ARCH_FLAGS_X86 $RELEASE_CFLAGS" \
+                    -DCMAKE_CXX_FLAGS="$ARCH_FLAGS_X86 $RELEASE_CXXFLAGS" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="3" \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_FAST_MATH=NO \
                     -DCMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS=YES \
@@ -286,8 +287,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
-                    -DCMAKE_INSTALL_PREFIX="$stage" \
-                    -DCMAKE_INSTALL_LIBDIR="$stage/lib/release" \
+                    -DCMAKE_INSTALL_PREFIX="$stage/release_x86" \
                     -DENABLE_THREADED_RESOLVER:BOOL=OFF \
                     -DENABLE_ARES:BOOL=ON \
                     -DCURL_USE_OPENSSL:BOOL=ON \
@@ -323,7 +323,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/release_x86/bin/curl --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -337,7 +337,165 @@ pushd "$CURL_SOURCE_DIR"
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd
-            #cp "$NGHTTP2_VERSION_HEADER_DIR"/*.h "$stage/include/nghttp2/"
+
+            # ARM64 Deploy Target
+            export MACOSX_DEPLOYMENT_TARGET=${ARM64_DEPLOY}
+
+            mkdir -p "build_debug_arm64"
+            pushd "build_debug_arm64"
+                CFLAGS="$ARCH_FLAGS_ARM64 $DEBUG_CFLAGS" \
+                CXXFLAGS="$ARCH_FLAGS_ARM64 $DEBUG_CXXFLAGS" \
+                CPPFLAGS="$DEBUG_CPPFLAGS" \
+                LDFLAGS="$ARCH_FLAGS_ARM64 $DEBUG_LDFLAGS" \
+                cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS:BOOL=OFF \
+                    -DCMAKE_C_FLAGS="$ARCH_FLAGS_ARM64 $DEBUG_CFLAGS" \
+                    -DCMAKE_CXX_FLAGS="$ARCH_FLAGS_ARM64 $DEBUG_CXXFLAGS" \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="0" \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_FAST_MATH=NO \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS=YES \
+                    -DCMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT=dwarf \
+                    -DCMAKE_XCODE_ATTRIBUTE_LLVM_LTO=NO \
+                    -DCMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD="c++17" \
+                    -DCMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY="libc++" \
+                    -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY="" \
+                    -DCMAKE_OSX_ARCHITECTURES:STRING=arm64 \
+                    -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
+                    -DCMAKE_OSX_SYSROOT=${SDKROOT} \
+                    -DCMAKE_MACOSX_RPATH=YES \
+                    -DCMAKE_INSTALL_PREFIX="$stage/debug_arm64" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
+                    -DENABLE_ARES:BOOL=ON \
+                    -DCURL_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_DICT=ON \
+                    -DCURL_DISABLE_FTP=ON \
+                    -DCURL_DISABLE_GOPHER=ON \
+                    -DCURL_DISABLE_IMAP=ON \
+                    -DCURL_DISABLE_LDAP=ON \
+                    -DCURL_DISABLE_LDAPS=ON \
+                    -DCURL_DISABLE_MQTT=ON \
+                    -DCURL_DISABLE_POP3=ON \
+                    -DCURL_DISABLE_RTSP=ON \
+                    -DCURL_DISABLE_SMB=ON \
+                    -DCURL_DISABLE_SMTP=ON \
+                    -DCURL_DISABLE_TELNET=ON \
+                    -DCURL_DISABLE_TFTP=ON \
+                    -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
+                    -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
+                    -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
+                    -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
+                    -DOPENSSL_LIBRARIES="${stage}/packages/lib/debug/libcrypto.a;${stage}/packages/lib/debug/libssl.a" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DCARES_LIBRARY="${stage}/packages/lib/debug/libcares.a" \
+                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+
+                cmake --build . --config Debug
+                cmake --install . --config Debug
+
+                # conditionally run unit tests
+                if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                    ctest -C Debug
+                fi
+
+                # Run 'curl' as a sanity check. Capture just the first line, which
+                # should have versions of stuff.
+                curlout="$("${stage}"/debug_arm64/bin/curl --version | tr -d '\r' | head -n 1)"
+                # With -e in effect, any nonzero rc blows up the script --
+                # so plain 'expr str : pattern' asserts that str contains pattern.
+                # curl version - should be start of line
+                expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null || true
+                # libcurl/version
+                expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null || true
+                # OpenSSL/version
+                expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null || true
+                # zlib/version
+                expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null || true
+                # nghttp2/versionx
+                expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null || true
+            popd
+
+            mkdir -p "build_release_arm64"
+            pushd "build_release_arm64"
+                CFLAGS="$ARCH_FLAGS_ARM64 $RELEASE_CFLAGS" \
+                CXXFLAGS="$ARCH_FLAGS_ARM64 $RELEASE_CXXFLAGS" \
+                CPPFLAGS="$RELEASE_CPPFLAGS" \
+                LDFLAGS="$ARCH_FLAGS_ARM64 $RELEASE_LDFLAGS" \
+                cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=OFF \
+                    -DCMAKE_C_FLAGS="$ARCH_FLAGS_ARM64 $RELEASE_CFLAGS" \
+                    -DCMAKE_CXX_FLAGS="$ARCH_FLAGS_ARM64 $RELEASE_CXXFLAGS" \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_OPTIMIZATION_LEVEL="3" \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_FAST_MATH=NO \
+                    -DCMAKE_XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS=YES \
+                    -DCMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT=dwarf \
+                    -DCMAKE_XCODE_ATTRIBUTE_LLVM_LTO=NO \
+                    -DCMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD="c++17" \
+                    -DCMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY="libc++" \
+                    -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY="" \
+                    -DCMAKE_OSX_ARCHITECTURES:STRING=arm64 \
+                    -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
+                    -DCMAKE_OSX_SYSROOT=${SDKROOT} \
+                    -DCMAKE_MACOSX_RPATH=YES \
+                    -DCMAKE_INSTALL_PREFIX="$stage/release_arm64" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
+                    -DENABLE_ARES:BOOL=ON \
+                    -DCURL_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_DICT=ON \
+                    -DCURL_DISABLE_FTP=ON \
+                    -DCURL_DISABLE_GOPHER=ON \
+                    -DCURL_DISABLE_IMAP=ON \
+                    -DCURL_DISABLE_LDAP=ON \
+                    -DCURL_DISABLE_LDAPS=ON \
+                    -DCURL_DISABLE_MQTT=ON \
+                    -DCURL_DISABLE_POP3=ON \
+                    -DCURL_DISABLE_RTSP=ON \
+                    -DCURL_DISABLE_SMB=ON \
+                    -DCURL_DISABLE_SMTP=ON \
+                    -DCURL_DISABLE_TELNET=ON \
+                    -DCURL_DISABLE_TFTP=ON \
+                    -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
+                    -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
+                    -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
+                    -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
+                    -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DCARES_LIBRARY="${stage}/packages/lib/release/libcares.a" \
+                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+
+                cmake --build . --config Release
+                cmake --install . --config Release
+
+                # conditionally run unit tests
+                if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                    ctest -C Release
+                fi
+
+                # Run 'curl' as a sanity check. Capture just the first line, which
+                # should have versions of stuff.
+                curlout="$("${stage}"/release_arm64/bin/curl --version | tr -d '\r' | head -n 1)"
+                # With -e in effect, any nonzero rc blows up the script --
+                # so plain 'expr str : pattern' asserts that str contains pattern.
+                # curl version - should be start of line
+                expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null || true
+                # libcurl/version
+                expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null || true
+                # OpenSSL/version
+                expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null || true
+                # zlib/version
+                expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null || true
+                # nghttp2/versionx
+                expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null || true
+            popd
+
+            # setup staging dirs
+            mkdir -p "$stage/include/curl"
+            mkdir -p "$stage/lib/debug"
+            mkdir -p "$stage/lib/release"
+
+            # create fat libraries
+            lipo -create ${stage}/debug_x86/lib/libcurld.a ${stage}/debug_arm64/lib/libcurld.a -output ${stage}/lib/debug/libcurld.a
+            lipo -create ${stage}/release_x86/lib/libcurl.a ${stage}/release_arm64/lib/libcurl.a -output ${stage}/lib/release/libcurl.a
+
+            # copy headers
+            mv $stage/release_x86/include/curl/* $stage/include/curl
         ;;
     
         linux*)

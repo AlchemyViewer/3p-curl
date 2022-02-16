@@ -237,7 +237,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/debug_x86/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/debug_x86/bin/curld --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -359,7 +359,7 @@ pushd "$CURL_SOURCE_DIR"
 
                 # Run 'curl' as a sanity check. Capture just the first line, which
                 # should have versions of stuff.
-                curlout="$("${stage}"/debug_arm64/bin/curl --version | tr -d '\r' | head -n 1)"
+                curlout="$("${stage}"/debug_arm64/bin/curld --version | tr -d '\r' | head -n 1)"
                 # With -e in effect, any nonzero rc blows up the script --
                 # so plain 'expr str : pattern' asserts that str contains pattern.
                 # curl version - should be start of line
@@ -527,7 +527,7 @@ pushd "$CURL_SOURCE_DIR"
             CPPFLAGS="$DEBUG_CPPFLAGS -I$stage/packages/include -I$stage/packages/include/zlib" \
             LDFLAGS="-L$stage/packages/lib/debug/" \
             LIBS="-ldl -lpthread" \
-            ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no --enable-threaded-resolver \
+            ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no \
             --enable-cookies --disable-ldap --disable-ldaps  --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/debug" \
             --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
@@ -575,7 +575,7 @@ pushd "$CURL_SOURCE_DIR"
             CPPFLAGS="$RELEASE_CPPFLAGS -I$stage/packages/include -I$stage/packages/include/zlib" \
             LDFLAGS="-L$stage/packages/lib/release/" \
             LIBS="-ldl -lpthread" \
-            ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no --enable-threaded-resolver \
+            ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no \
             --enable-cookies --disable-ldap --disable-ldaps --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/release" \
             --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/

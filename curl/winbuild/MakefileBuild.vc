@@ -171,16 +171,19 @@ USE_CARES      = true
 CARES          = dll
 !ELSEIF "$(WITH_CARES)"=="static"
 !IF "$(DEBUG)"=="yes"
-CARES_LIBS     = libcaresd.lib
+CARES_LIBS     = libcaresd.lib Iphlpapi.lib
 !ELSE
-CARES_LIBS     = libcares.lib
+CARES_LIBS     = libcares.lib Iphlpapi.lib
 !ENDIF
 USE_CARES      = true
 CARES          = static
 !ENDIF
 
 !IFDEF USE_CARES
-CARES_CFLAGS   = /DUSE_ARES /I"$(DEVEL_INCLUDE)/cares"
+CARES_CFLAGS   = /DUSE_ARES /I"$(DEVEL_INCLUDE)"
+!IF "$(CARES)"=="static"
+CARES_CFLAGS   = $(CARES_CFLAGS) /DCARES_STATICLIB
+!ENDIF
 !ENDIF
 
 !IF "$(WITH_ZLIB)"=="dll"

@@ -109,9 +109,13 @@ endif()
 
 if(ENABLE_ARES)
   set(USE_ARES 1)
-  find_package(CARES REQUIRED)
-  list(APPEND CURL_LIBS ${CARES_LIBRARY} )
-  set(CURL_LIBS ${CURL_LIBS} ${CARES_LIBRARY})
+  #find_package(CARES REQUIRED)
+  set(CARES_FOUND ON)
+  list(APPEND CURL_LIBS ${CARES_LIBRARY})
+
+  if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    list(APPEND CURL_LIBS resolv)
+  endif()
 endif()
 
 if(MSVC)

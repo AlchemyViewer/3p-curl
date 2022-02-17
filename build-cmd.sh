@@ -149,8 +149,6 @@ pushd "$CURL_SOURCE_DIR"
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
             # zlib/version
             expr "$curlout" : ".* zlib/1.2.11.zlib-ng" > /dev/null
-            #  c-ares/version
-            expr "$curlout" : ".* c-ares/$(escape_dots "$(get_installable_version c-ares 3)")" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
 

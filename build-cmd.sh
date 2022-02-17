@@ -109,10 +109,10 @@ pushd "$CURL_SOURCE_DIR"
 
             pushd winbuild
                 # Debug target.  static for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch DEBUG=yes
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch DEBUG=yes
 
                 # Release target.  static for SSL, libcurl, nghttp2, and zlib
-                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static WITH_CARES=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch
+                nmake /f Makefile.vc mode=static VC=14 WITH_DEVEL="$packages" WITH_NGHTTP2=static WITH_SSL=static WITH_ZLIB=static ENABLE_IPV6=yes ENABLE_IDN=yes GEN_PDB=no MACHINE=$targetarch
             popd
 
             # conditionally run unit tests
@@ -125,16 +125,16 @@ pushd "$CURL_SOURCE_DIR"
 
             # Stage archives
             mkdir -p "${stage}"/lib/{debug,release}
-            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
+            cp -a builds/libcurl-vc14-$targetarch-debug-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a_debug.lib "${stage}"/lib/debug/libcurld.lib
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/lib/libcurl_a.lib "${stage}"/lib/release/libcurl.lib
 
             # Stage curl.exe
             mkdir -p "${stage}"/bin
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/bin/curl.exe "${stage}"/bin/
 
             # Stage headers
             mkdir -p "${stage}"/include
-            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-cares-static-zlib-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
+            cp -a builds/libcurl-vc14-$targetarch-release-static-ssl-static-zlib-static-ipv6-sspi-nghttp2-static/include/curl/ "${stage}"/include/
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.
@@ -215,17 +215,15 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
                     -DCMAKE_INSTALL_PREFIX="$stage/debug_x86" \
-                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
-                    -DENABLE_ARES:BOOL=ON \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/debug/libcrypto.a;${stage}/packages/lib/debug/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
-                    -DCARES_LIBRARY="${stage}/packages/lib/debug/libcares.a" \
-                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                 cmake --build . --config Debug
                 cmake --install . --config Debug
@@ -275,17 +273,15 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
                     -DCMAKE_INSTALL_PREFIX="$stage/release_x86" \
-                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
-                    -DENABLE_ARES:BOOL=ON \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
-                    -DCARES_LIBRARY="${stage}/packages/lib/release/libcares.a" \
-                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                 cmake --build . --config Release
                 cmake --install . --config Release
@@ -337,17 +333,15 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
                     -DCMAKE_INSTALL_PREFIX="$stage/debug_arm64" \
-                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
-                    -DENABLE_ARES:BOOL=ON \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=ON \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/debug/libcrypto.a;${stage}/packages/lib/debug/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
-                    -DCARES_LIBRARY="${stage}/packages/lib/debug/libcares.a" \
-                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                 cmake --build . --config Debug
                 cmake --install . --config Debug
@@ -396,17 +390,15 @@ pushd "$CURL_SOURCE_DIR"
                     -DCMAKE_OSX_SYSROOT=${SDKROOT} \
                     -DCMAKE_MACOSX_RPATH=YES \
                     -DCMAKE_INSTALL_PREFIX="$stage/release_arm64" \
-                    -DENABLE_THREADED_RESOLVER:BOOL=OFF \
-                    -DENABLE_ARES:BOOL=ON \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=ON \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
                     -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
                     -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
-                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/" \
-                    -DCARES_LIBRARY="${stage}/packages/lib/release/libcares.a" \
-                    -DCARES_INCLUDE_DIR="${stage}/packages/include/" \
+                    -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                 cmake --build . --config Release
                 cmake --install . --config Release
@@ -527,10 +519,10 @@ pushd "$CURL_SOURCE_DIR"
             CPPFLAGS="$DEBUG_CPPFLAGS -I$stage/packages/include -I$stage/packages/include/zlib" \
             LDFLAGS="-L$stage/packages/lib/debug/" \
             LIBS="-ldl -lpthread" \
-            ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no \
+            ./configure --disable-debug --disable-curldebug --disable-optimize --enable-shared=no --enable-threaded-resolver \
             --enable-cookies --disable-ldap --disable-ldaps  --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/debug" \
-            --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
+            --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
 
             make -j$JOBS
             make install DESTDIR="$stage"
@@ -575,10 +567,10 @@ pushd "$CURL_SOURCE_DIR"
             CPPFLAGS="$RELEASE_CPPFLAGS -I$stage/packages/include -I$stage/packages/include/zlib" \
             LDFLAGS="-L$stage/packages/lib/release/" \
             LIBS="-ldl -lpthread" \
-            ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no \
+            ./configure --disable-curldebug --disable-debug  --enable-optimize --enable-shared=no --enable-threaded-resolver \
             --enable-cookies --disable-ldap --disable-ldaps --without-libssh2 \
             --prefix="\${AUTOBUILD_PACKAGES_DIR}" --libdir="\${prefix}/lib/release" \
-            --enable-ares="$stage"/packages/ --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
+            --with-ssl="$stage"/packages --with-zlib="$stage"/packages --with-nghttp2="$stage"/packages/
 
             make -j$JOBS
             make install DESTDIR="$stage"

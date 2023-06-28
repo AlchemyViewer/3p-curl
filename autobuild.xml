@@ -89,11 +89,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1731dcfd01cbb3f179597ee33a424c1e767112d9652fc8adbf1e3cb02da07fcbc8e2751124f7ff9d5e6190e93d46babc1696cf867ca664df967b780862ad509e</string>
+              <string>fe2a54062ab8bbccf9ca33441db7874b021b0ace4244bbc08d5a1e1882f4803b90c27207449a95e6e37649f38ed32697e69d0a367492a9e6f220c7b71cf19060</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1t.1924/openssl-1.1.1t-darwin64-1924.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1u.2074/openssl-1.1.1u-darwin64-2074.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -103,11 +103,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>02b0eb1b5fb695565b8ba353bb622261e6eb300a0e5dd4b19e2d658ccceb83c25dc0f2267985763b4059478da66eb18ebe4d1b912822e70b43c7ed731301347a</string>
+              <string>1b2b41d4dbd28abbea96df2fa01bca5ecc5ef78ee4458242118548b05c1494d91dcb2d347238d135ab407ab66720fa6751c5844f40dd2d9b8874eb89c3a14527</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1t.1924/openssl-1.1.1t-linux64-1924.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1u.2074/openssl-1.1.1u-linux64-2074.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -117,18 +117,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>593e7f1d6503c3dd1c3554451b5847741851158ecaa6968d0eaa609bf9e19bd514ab70ce1b81979846a554301686e5436130974a38cd34da3537cfbfa1d4927c</string>
+              <string>1f37df0a311fd291cb9b5ddb1f59035739f95fbd7052910bebb1aa75984c6a1499f79c23b99f0f99e7652651a839ada2aec8009d5aa9b0dfdb8e8564c87a3a6c</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1t.1924/openssl-1.1.1t-windows64-1924.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/90/packages/generic/openssl/1.1.1u.2074/openssl-1.1.1u-windows64-2074.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.1.1t</string>
+        <string>1.1.1u</string>
       </map>
       <key>zlib-ng</key>
       <map>
@@ -151,11 +151,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0f6b328b6166ec0df4fdf2eef7bbbee458a791c3e1d77565b61c44daa0df3da44c0b038a6bdd86703e07a69c44a94e520d107d4a96c767f93239d82d1fb12edb</string>
+              <string>da82c08024d31cd89b2f6963c900e21233ab241084303324bf171e31170fa39b388268b4fbdb5874fa1ed6dcf8bc014b48e019d0134bfa25aae9dfc0fc45e642</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.0.7.1920/zlib_ng-2.0.7-darwin64-1920.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.1.2.2072/zlib_ng-2.1.2-darwin64-2072.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -165,11 +165,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>9aadb5056a9b08cbad37766c4bbda41b1c0cf1706a05562c2ccb0af8a58f7ac1eef69b51d1531748f8fd2033ad0406b5d559f8a0e31bb9d6602be962c5815e9f</string>
+              <string>1a350c02568663749de78b095f1827aebb61075cc3d87eaeaf59a88b273d4520564e8b192879ea365e61365ad4dbad0f8cc5908a48fa9242d50b26cb6a037909</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.0.7.1920/zlib_ng-2.0.7-linux64-1920.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.1.2.2072/zlib_ng-2.1.2-linux64-2072.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -179,18 +179,18 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>20c77dd46f56c6f398b93219e22aede0ada3f9134df7ed24b3b22c064da53c8e8e4e7d1eda017778d3f0e37030a43c2acb5b4c08d53abf5fbb0503b6a66d8a61</string>
+              <string>14ecc6e6fad7c4a2c53556234514a548368bbe50a56b7898ca86842290a6ed43e1e3ff1eabac11da06d62caec0618098ee91388b810e78feed6a37cddca637d1</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.0.7.1920/zlib_ng-2.0.7-windows64-1920.tar.zst</string>
+              <string>https://git.alchemyviewer.org/api/v4/projects/148/packages/generic/zlib-ng/2.1.2.2072/zlib_ng-2.1.2-windows64-2072.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>2.0.7</string>
+        <string>2.1.2</string>
       </map>
     </map>
     <key>package_description</key>

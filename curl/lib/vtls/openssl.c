@@ -3350,18 +3350,6 @@ CURLcode Curl_ossl_random(struct Curl_easy *data, unsigned char *entropy,
   return (rc == 1 ? CURLE_OK : CURLE_FAILED_INIT);
 }
 
-void Curl_ossl_md5sum(unsigned char *tmp, /* input */
-                      size_t tmplen,
-                      unsigned char *md5sum /* output */,
-                      size_t unused)
-{
-  MD5_CTX MD5pw;
-  (void)unused;
-  MD5_Init(&MD5pw);
-  MD5_Update(&MD5pw, tmp, tmplen);
-  MD5_Final(md5sum, &MD5pw);
-}
-
 #if (OPENSSL_VERSION_NUMBER >= 0x0090800fL) && !defined(OPENSSL_NO_SHA256)
 void Curl_ossl_sha256sum(const unsigned char *tmp, /* input */
                       size_t tmplen,

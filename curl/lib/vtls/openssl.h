@@ -68,10 +68,6 @@ bool Curl_ossl_data_pending(const struct connectdata *conn,
 /* return 0 if a find random is filled in */
 CURLcode Curl_ossl_random(struct Curl_easy *data, unsigned char *entropy,
                           size_t length);
-void Curl_ossl_md5sum(unsigned char *tmp, /* input */
-                      size_t tmplen,
-                      unsigned char *md5sum /* output */,
-                      size_t unused);
 void Curl_ossl_sha256sum(const unsigned char *tmp, /* input */
                       size_t tmplen,
                       unsigned char *sha256sum /* output */,

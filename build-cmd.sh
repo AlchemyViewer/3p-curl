@@ -218,6 +218,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
@@ -278,6 +279,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
@@ -340,6 +342,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
@@ -399,6 +402,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=ON \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
@@ -492,6 +496,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/debug/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/debug/libnghttp2.a" \
@@ -536,6 +541,7 @@ pushd "$CURL_SOURCE_DIR"
                     -DENABLE_THREADED_RESOLVER:BOOL=ON \
                     -DENABLE_ARES:BOOL=OFF \
                     -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DCURL_DISABLE_CRYPTO_AUTH:BOOL=TRUE \
                     -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
                     -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib" \
                     -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \

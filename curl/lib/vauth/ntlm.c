@@ -587,45 +587,6 @@ CURLcode Curl_auth_create_ntlm_type3_message(struct Curl_easy *data,
   }
   else
 #endif
-
-#if defined(USE_NTRESPONSES) && defined(USE_NTLM2SESSION)
-  /* We don't support NTLM2 if we don't have USE_NTRESPONSES */
-  if(ntlm->flags & NTLMFLAG_NEGOTIATE_NTLM2_KEY) {
-    unsigned char ntbuffer[0x18];
-    unsigned char tmp[0x18];
-    unsigned char md5sum[MD5_DIGEST_LENGTH];
-    unsigned char entropy[8];
-
-    /* Need to create 8 bytes random data */
-    result = Curl_rand(data, entropy, 8);
-    if(result)
-      return result;
-
-    /* 8 bytes random data as challenge in lmresp */
-    memcpy(lmresp, entropy, 8);
-
-    /* Pad with zeros */
-    memset(lmresp + 8, 0, 0x10);
-
-    /* Fill tmp with challenge(nonce?) + entropy */
-    memcpy(tmp, &ntlm->nonce[0], 8);
-    memcpy(tmp + 8, entropy, 8);
-
-    result = Curl_ssl_md5sum(tmp, 16, md5sum, MD5_DIGEST_LENGTH);
-    if(!result)
-      /* We shall only use the first 8 bytes of md5sum, but the des code in
-         Curl_ntlm_core_lm_resp only encrypt the first 8 bytes */
-      result = Curl_ntlm_core_mk_nt_hash(data, passwdp, ntbuffer);
-    if(result)
-      return result;
-
-    Curl_ntlm_core_lm_resp(ntbuffer, md5sum, ntresp);
-
-    /* End of NTLM2 Session code */
-
-  }
-  else
-#endif
   {
 
 #ifdef USE_NTRESPONSES

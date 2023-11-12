@@ -148,7 +148,7 @@ pushd "$CURL_SOURCE_DIR"
             # OpenSSL/version
             expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
             # zlib/version
-            expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null
+            expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null
             # nghttp2/version
             expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
 
@@ -246,7 +246,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd
@@ -307,7 +307,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd
@@ -370,7 +370,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null || true
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null || true
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null || true
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null || true
             popd
@@ -430,7 +430,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null || true
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null || true
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null || true
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null || true
             popd
@@ -524,7 +524,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd
@@ -569,7 +569,7 @@ pushd "$CURL_SOURCE_DIR"
                 # OpenSSL/version
                 expr "$curlout" : ".* OpenSSL/$(escape_dots "$(get_installable_version openssl 3)")" > /dev/null
                 # zlib/version
-                expr "$curlout" : ".* zlib/1.2.13.zlib-ng" > /dev/null
+                expr "$curlout" : ".* zlib/1.3.0.zlib-ng" > /dev/null
                 # nghttp2/versionx
                 expr "$curlout" : ".* nghttp2/$(escape_dots "$(get_installable_version nghttp2 3)")" > /dev/null
             popd

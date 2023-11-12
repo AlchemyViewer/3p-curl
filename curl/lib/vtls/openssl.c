@@ -152,6 +152,13 @@ static unsigned long OpenSSL_version_num(void)
 #define OSSL_PACKAGE "OpenSSL"
 #endif
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && \
+    !(defined(LIBRESSL_VERSION_NUMBER) && \
+      LIBRESSL_VERSION_NUMBER < 0x2070100fL) && \
+    !defined(OPENSSL_IS_BORINGSSL)
+#define HAVE_OPENSSL_VERSION
+#endif
+
 #if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
 /* up2date versions of OpenSSL maintain the default reasonably secure without
  * breaking compatibility, so it is better not to override the default by curl
@@ -3297,6 +3304,9 @@ size_t Curl_ossl_version(char *buffer, size_t size)
 {
 #ifdef OPENSSL_IS_BORINGSSL
   return snprintf(buffer, size, OSSL_PACKAGE);
+#elif defined(HAVE_OPENSSL_VERSION) && defined(OPENSSL_VERSION_STRING)
+  return snprintf(buffer, size, "%s/%s",
+                   OSSL_PACKAGE, OpenSSL_version(OPENSSL_VERSION_STRING));
 #else /* OPENSSL_IS_BORINGSSL */
   char sub[3];
   unsigned long ssleay_value;

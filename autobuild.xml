@@ -16,11 +16,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>4056ca78eaaa7578798b9eb4ee5580471259ccdc163578eb3a194cb5581f8a9f0476eb4dcf8698e1e6c91c0831cc8904e36f43d448dd403fe49675ede1af340f</string>
+              <string>c42e000d1216e9594fb8c4658549275d5279907b5f09143194ca473e846408878a1c1bfe5ca0705649dc4fd59f01f938e35ba60f19fd61ac4af771092dfdcd71</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-615c215/nghttp2-1.62.1-darwin64-9629633414.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-59062cf/nghttp2-1.62.1-darwin64-9631068005.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -30,11 +30,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c1ff3f6f5923b7bec204841fd43b391679378f2069fe28069e20a7700dccd87011c21b633ac14afe05db0315de1bcce1bea417877ffddd0a465e4e07283506f7</string>
+              <string>423fcf201e772228863b0ca1b642fc6391fc6996433fc057fa557f7fd791e00dfd7cb409978dcacf69db91182b8716a25e0d66f1eecc3f52a68c9891600da86e</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-615c215/nghttp2-1.62.1-linux64-9629633414.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-59062cf/nghttp2-1.62.1-linux64-9631068005.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -44,11 +44,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>7a1f5dc9a704912f4c99a269756f630cc6c78bf6ba1a639ff3bfeadc0011fab870f2fa0e706ed10b4bf1886122bd48273a22b9f8a123a406f93d06eb9ffae859</string>
+              <string>f36d8dedecb23bddafce695213c8893df4e10c7ca4c32821231d489aa46045b10a22c7b592984478c0ffd6e4286258d80d3f92ebb36c467b2d9c055f2ab94964</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-615c215/nghttp2-1.62.1-windows64-9629633414.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.62.1-59062cf/nghttp2-1.62.1-windows64-9631068005.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>

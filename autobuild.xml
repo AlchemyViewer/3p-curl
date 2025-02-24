@@ -16,11 +16,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>f45ea5a42d6a419f9b605dd3f976fbcb3850d736</string>
+              <string>713d35841124e5d7d0832340aa8e6826160d5b6632e0bc01ec84eba722fd334be776956c43cefd59b3c75ff67023a94b2f7201341f725c3de9e8dfedffbfe5e1</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-r1-darwin64-13184359419.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-dev0.g173c148.d20250224-darwin64-13491829322.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -30,11 +30,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>c6e450fa41f24f1b4103d2006d706595f2a36c59</string>
+              <string>aac6b887c063be35040d28a955d45a75446ec5ad839dab505d1dc1060ca6abab62f8620b46a682fab62cedefdf9e47d06e987d9ce0d127931777a78198a1ff97</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-r1-linux64-13184359419.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-dev0.g173c148.d20250224-linux64-13491829322.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -44,11 +44,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3bd92f892e155104740570fe244ea4dbb0b57d4b</string>
+              <string>0affedf493471894f5063c6f051faff3bc0aff690825bbcd3e9cec78f1a44970969a78f5a7e5d120df91d1fcfc69d49179b469061a8a06b20893ea4eb62be3ce</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-r1-windows64-13184359419.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-nghttp2/releases/download/v1.64.0-r2/nghttp2-1.64.0-dev0.g173c148.d20250224-windows64-13491829322.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -62,7 +62,7 @@
         <string>Copyright (c) 2012, 2014, 2015, 2016 Tatsuhiro Tsujikawa
 Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>version</key>
-        <string>1.64.0-r1</string>
+        <string>1.64.0-dev0.g173c148.d20250224</string>
         <key>name</key>
         <string>nghttp2</string>
         <key>description</key>
@@ -79,11 +79,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>157193699127ac5056c5fc1a410f9c98d39731e2</string>
+              <string>0ff0ed7af9b5ad072e8677eb6e3aa071bbe7a03731449b38171c044ac0806d9faa732211c4591f894e19958450516f79a4fa6c70690542b2cd22aef4a4fc464e</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-darwin64-13246054022.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r2/openssl-1.1.1w-r2-darwin64-13486690373.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -93,11 +93,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>2e29c127dbd002d64ae55bc000f8b6ed0249fad7</string>
+              <string>9e21e47da6201a7faa7211819c14722f6a1b088ac3ce2e763e29ca995ff3395581f654ec2b3d435e1f6d9c175719be83f812d6dbc95c0705304906e22fb19187</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-linux64-13246054022.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r2/openssl-1.1.1w-r2-linux64-13486690373.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -107,11 +107,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ae9ced89051e03a99628c99b9ac78530fdea1e5a</string>
+              <string>2a695e4fb236741e4cd790eeca9bf3aea6f5daa8e0a7138fea94c9e1ffc30554dd21d5a063f8df767e68900fef1867429a3e6cbd380253890e889c3b35835071</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-windows64-13246054022.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r2/openssl-1.1.1w-r2-windows64-13486690373.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -124,7 +124,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>copyright</key>
         <string>Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
         <key>version</key>
-        <string>1.1.1w-r3</string>
+        <string>1.1.1w-r2</string>
         <key>name</key>
         <string>openssl</string>
         <key>description</key>
@@ -139,11 +139,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>e363e3b889c52fda7601d7aeaa9832307034651e</string>
+              <string>ea8354aedf732fab3ae7e2931d493175c78f426657d465356b1d04ca75eee2e47dc5fca8910b6d2093819e8bfffab661a63803bee9eaabd1401860bf47b5c0fd</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-zlib-ng/releases/download/v2.2.3-r1/zlib_ng-2.2.3-dev0.g8aa13e3.d20250206-darwin64-13183604450.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-zlib-ng/releases/download/v2.2.4-r3/zlib_ng-2.2.4.13485424982-darwin64-13485424982.tar.zst</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -153,11 +153,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3cdd52f7fb3691789d50f0b40ed6f5642321ff32</string>
+              <string>c123a43db118c5b44b99e299a98aa29f0d58edb3f5b874d6877770d0a95f53b99201cf03746381b9d506fcea2701f8a029854a3d30f4a4614e182e9ef88f0ff0</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-zlib-ng/releases/download/v2.2.3-r1/zlib_ng-2.2.3-dev0.g8aa13e3.d20250206-linux64-13183604450.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-zlib-ng/releases/download/v2.2.4-r3/zlib_ng-2.2.4.13485424982-linux64-13485424982.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -167,11 +167,11 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>e802a28139328bb2421ad39e13d996d350d8106d</string>
+              <string>52c2e385869d2ae4189eec525dc3980756a3d0acc74cae5754bf5c6441766a2c40b3b1fe25146ded8754581c3ad22638df52db67ff530f49d9160351ada3986c</string>
               <key>hash_algorithm</key>
-              <string>sha1</string>
+              <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/secondlife/3p-zlib-ng/releases/download/v2.2.3-r1/zlib_ng-2.2.3-dev0.g8aa13e3.d20250206-windows64-13183604450.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-zlib-ng/releases/download/v2.2.4-r3/zlib_ng-2.2.4.13485424982-windows64-13485424982.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -182,13 +182,13 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>license_file</key>
         <string>LICENSES/zlib-ng.txt</string>
         <key>copyright</key>
-        <string>Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler</string>
+        <string>Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler</string>
         <key>version</key>
-        <string>2.2.3-dev0.g8aa13e3.d20250206</string>
+        <string>2.2.4.13485424982</string>
         <key>name</key>
         <string>zlib-ng</string>
         <key>canonical_repo</key>
-        <string>https://bitbucket.org/lindenlab/3p-zlib-ng</string>
+        <string>https://github.com/AlchemyViewer/3p-zlib-ng</string>
         <key>description</key>
         <string>zlib data compression library for the next generation systems</string>
       </map>

@@ -149,38 +149,86 @@ mkdir -p "$CURL_BUILD_DIR"
 pushd "$CURL_BUILD_DIR"
     case "$AUTOBUILD_PLATFORM" in
         windows*)
-            opts="$(replace_switch /Zi /Z7 $LL_BUILD_RELEASE) -DNGHTTP2_STATICLIB=1"
-            plainopts="$(remove_switch /GR $(remove_cxxstd $opts))"
-
             packages="$(cygpath -m "$stage/packages")"
             load_vsvars
 
-            cmake "$(cygpath -m "${CURL_SOURCE_DIR}")" \
-                -G"$AUTOBUILD_WIN_CMAKE_GEN" -A"$AUTOBUILD_WIN_VSPLATFORM" \
-                -DCMAKE_C_FLAGS:STRING="$plainopts" \
-                -DCMAKE_CXX_FLAGS:STRING="$opts" \
-                -DENABLE_THREADED_RESOLVER:BOOL=ON \
-                -DCMAKE_USE_OPENSSL:BOOL=TRUE \
-                -DUSE_NGHTTP2:BOOL=TRUE \
-                -DNGHTTP2_INCLUDE_DIR:FILEPATH="$packages/include" \
-                -DNGHTTP2_LIBRARY:FILEPATH="$packages/lib/release/nghttp2.lib" \
-                -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")"
+            mkdir -p "build_debug"
+            pushd "build_debug"
+                opts="$(replace_switch /Zi /Z7 $LL_BUILD_DEBUG) -DNGHTTP2_STATICLIB=1"
+                plainopts="$(remove_switch /GR $(remove_cxxstd $opts))"
 
-            check_damage "$AUTOBUILD_PLATFORM"
+                cmake "$(cygpath -m "${CURL_SOURCE_DIR}")" \
+                    -G"$AUTOBUILD_WIN_CMAKE_GEN" -A"$AUTOBUILD_WIN_VSPLATFORM" \
+                    -DCMAKE_CONFIGURATION_TYPES="Debug" \
+                    -DCMAKE_C_FLAGS:STRING="$plainopts" \
+                    -DCMAKE_CXX_FLAGS:STRING="$opts" \
+                    -DCMAKE_MSVC_DEBUG_INFORMATION_FORMAT="Embedded" \
+                    -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DUSE_NGHTTP2:BOOL=TRUE \
+                    -DZLIB_LIBRARIES="$(cygpath -m ${stage}/packages/lib/debug/zlibd.lib)" \
+                    -DZLIB_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/zlib-ng)" \
+                    -DNGHTTP2_LIBRARIES="$(cygpath -m ${stage}/packages/lib/debug/nghttp2.lib)" \
+                    -DNGHTTP2_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/nghttp2)" \
+                    -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/debug/libcrypto.lib);$(cygpath -m ${stage}/packages/lib/debug/libssl.lib)" \
+                    -DOPENSSL_INCLUDE_DIR="$(cygpath -m ${stage}/packages/include/)"
 
-            cmake --build . --config Release -j$AUTOBUILD_CPU_COUNT
-            cmake --install . --config Release
+                check_damage "$AUTOBUILD_PLATFORM"
 
-            # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                pushd tests
-                # Nothin' to do yet
-                popd
-            fi
+                cmake --build . --config Debug -j$AUTOBUILD_CPU_COUNT
+                cmake --install . --config Debug
 
-            # Stage archives
-            mkdir -p "${stage}/lib/release"
-            mv "${stage}/lib/libcurl.lib" "${stage}"/lib/release/
+                # conditionally run unit tests
+                if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                    pushd tests
+                    # Nothin' to do yet
+                    popd
+                fi
+
+                # Stage archives
+                mkdir -p "${stage}/lib/debug"
+                mv "${stage}/lib/libcurld.lib" "${stage}"/lib/debug/
+            popd
+
+            mkdir -p "build_release"
+            pushd "build_release"
+                opts="$(replace_switch /Zi /Z7 $LL_BUILD_RELEASE) -DNGHTTP2_STATICLIB=1"
+                plainopts="$(remove_switch /GR $(remove_cxxstd $opts))"
+
+                cmake "$(cygpath -m "${CURL_SOURCE_DIR}")" \
+                    -G"$AUTOBUILD_WIN_CMAKE_GEN" -A"$AUTOBUILD_WIN_VSPLATFORM" \
+                    -DCMAKE_CONFIGURATION_TYPES="Release" \
+                    -DCMAKE_C_FLAGS:STRING="$plainopts" \
+                    -DCMAKE_CXX_FLAGS:STRING="$opts" \
+                    -DCMAKE_MSVC_DEBUG_INFORMATION_FORMAT="Embedded" \
+                    -DCMAKE_INSTALL_PREFIX="$(cygpath -m "$stage")" \
+                    -DENABLE_THREADED_RESOLVER:BOOL=ON \
+                    -DCMAKE_USE_OPENSSL:BOOL=TRUE \
+                    -DUSE_NGHTTP2:BOOL=TRUE \
+                    -DZLIB_LIBRARIES="$(cygpath -m ${stage}/packages/lib/release/zlib.lib)" \
+                    -DZLIB_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/zlib-ng)" \
+                    -DNGHTTP2_LIBRARIES="$(cygpath -m ${stage}/packages/lib/release/nghttp2.lib)" \
+                    -DNGHTTP2_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/nghttp2)" \
+                    -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/release/libcrypto.lib);$(cygpath -m ${stage}/packages/lib/release/libssl.lib)" \
+                    -DOPENSSL_INCLUDE_DIR="$(cygpath -m ${stage}/packages/include/)"
+
+                check_damage "$AUTOBUILD_PLATFORM"
+
+                cmake --build . --config Release -j$AUTOBUILD_CPU_COUNT
+                cmake --install . --config Release
+
+                # conditionally run unit tests
+                if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                    pushd tests
+                    # Nothin' to do yet
+                    popd
+                fi
+
+                # Stage archives
+                mkdir -p "${stage}/lib/release"
+                mv "${stage}/lib/libcurl.lib" "${stage}"/lib/release/
+            popd
 
             # Run 'curl' as a sanity check. Capture just the first line, which
             # should have versions of stuff.
@@ -243,12 +291,16 @@ pushd "$CURL_BUILD_DIR"
                         -DENABLE_THREADED_RESOLVER:BOOL=ON \
                         -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                         -DUSE_NGHTTP2:BOOL=TRUE \
-                        -DNGHTTP2_INCLUDE_DIR:FILEPATH="$stage/packages/include" \
-                        -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.a" \
                         -DCMAKE_INSTALL_PREFIX="$stage" \
                         -DCMAKE_INSTALL_LIBDIR="$stage/lib/release/$arch" \
                         -DCMAKE_OSX_ARCHITECTURES="$arch" \
-                        -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
+                        -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
+                        -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
+                        -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib-ng" \
+                        -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
+                        -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
+                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
+                        -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                     check_damage "$AUTOBUILD_PLATFORM"
 
@@ -338,10 +390,14 @@ pushd "$CURL_BUILD_DIR"
                 -DENABLE_THREADED_RESOLVER:BOOL=ON \
                 -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                 -DUSE_NGHTTP2:BOOL=TRUE \
-                -DNGHTTP2_INCLUDE_DIR:FILEPATH="$stage/packages/include" \
-                -DNGHTTP2_LIBRARY:FILEPATH="$stage/packages/lib/release/libnghttp2.a" \
                 -DBUILD_SHARED_LIBS:BOOL=FALSE \
-                -DCMAKE_INSTALL_PREFIX=$stage
+                -DCMAKE_INSTALL_PREFIX=$stage \
+                -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
+                -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib-ng" \
+                -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
+                -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
+                -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a;dl" \
+                -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
             check_damage "$AUTOBUILD_PLATFORM"
 

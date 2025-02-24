@@ -38,16 +38,17 @@
 # To check:
 # (From Daniel Stenberg) The cmake build selected to run gcc with -fPIC on my box while the plain configure script did not.
 # (From Daniel Stenberg) The gcc command line use neither -g nor any -O options. As a developer, I also treasure our configure scripts's --enable-debug option that sets a long range of "picky" compiler options.
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16..3.29 FATAL_ERROR)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
 set(CMAKE_DEBUG_POSTFIX "d")
 
 include(Utilities)
 include(Macros)
 include(CMakeDependentOption)
-include(GNUInstallDirs)
 
 project( CURL C )
+
+include(GNUInstallDirs)
 
 file (READ ${CURL_SOURCE_DIR}/include/curl/curlver.h CURL_VERSION_H_CONTENTS)
 string (REGEX MATCH "#define LIBCURL_VERSION \"[^\"]*"
@@ -354,7 +355,7 @@ if(CMAKE_USE_DARWINSSL)
 endif()
 
 if(CMAKE_USE_OPENSSL)
-  find_package(OpenSSL REQUIRED)
+  #find_package(OpenSSL REQUIRED)
   set(SSL_ENABLED ON)
   set(USE_OPENSSL ON)
   set(HAVE_LIBCRYPTO ON)
@@ -384,9 +385,9 @@ if(CMAKE_USE_MBEDTLS)
   include_directories(${MBEDTLS_INCLUDE_DIRS})
 endif()
 
-option(USE_NGHTTP2 "Use Nghttp2 library" OFF)
+option(USE_NGHTTP2 "Use Nghttp2 library" ON)
 if(USE_NGHTTP2)
-  find_package(NGHTTP2 REQUIRED)
+  #find_package(NGHTTP2 REQUIRED)
   include_directories(${NGHTTP2_INCLUDE_DIRS})
   list(APPEND CURL_LIBS ${NGHTTP2_LIBRARIES})
 endif()
@@ -511,15 +512,15 @@ set(HAVE_LIBZ OFF)
 set(HAVE_ZLIB_H OFF)
 set(HAVE_ZLIB OFF)
 if(CURL_ZLIB)
-  find_package(ZLIB QUIET)
-  if(ZLIB_FOUND)
+  #find_package(ZLIB QUIET)
+  #if(ZLIB_FOUND)
     set(HAVE_ZLIB_H ON)
     set(HAVE_ZLIB ON)
     set(HAVE_LIBZ ON)
     list(APPEND CURL_LIBS ${ZLIB_LIBRARIES})
     include_directories(${ZLIB_INCLUDE_DIRS})
     list(APPEND CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIRS})
-  endif()
+  #endif()
 endif()
 
 #libSSH2
@@ -1157,16 +1158,16 @@ function(TRANSFORM_MAKEFILE_INC INPUT_FILE OUTPUT_FILE)
 
 endfunction()
 
-find_program(groff groff)
-find_program(roffit roffit)
-find_program(ps2pdf ps2pdf)
+#find_program(groff groff)
+#find_program(roffit roffit)
+#find_program(ps2pdf ps2pdf)
 ##message(STATUS "groff='${groff}', roffit=${roffit}, ps2pdf=${ps2pdf}")
 # Making the docs subdirectory requires all three of the above commands.
-if (NOT (${groff}  STREQUAL "groff-NOTFOUND" OR
-         ${roffit} STREQUAL "roffit-NOTFOUND" OR
-         ${ps2pdf} STREQUAL "ps2pdf-NOTFOUND"))
-  add_subdirectory(docs)
-endif()
+#if (NOT (${groff}  STREQUAL "groff-NOTFOUND" OR
+#         ${roffit} STREQUAL "roffit-NOTFOUND" OR
+#         ${ps2pdf} STREQUAL "ps2pdf-NOTFOUND"))
+#  add_subdirectory(docs)
+#endif()
 add_subdirectory(lib)
 if(BUILD_CURL_EXE)
   add_subdirectory(src)

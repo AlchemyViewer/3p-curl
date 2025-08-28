@@ -82,13 +82,6 @@
 #include "cookie.h"
 #include "formdata.h"
 
-#ifdef USE_OPENSSL
-#include <openssl/ssl.h>
-#ifdef HAVE_OPENSSL_ENGINE_H
-#include <openssl/engine.h>
-#endif
-#endif /* USE_OPENSSL */
-
 #ifdef USE_GNUTLS
 #include <gnutls/gnutls.h>
 #endif
@@ -280,9 +273,9 @@ struct ssl_connect_data {
   ssl_connect_state connecting_state;
 #if defined(USE_OPENSSL)
   /* these ones requires specific SSL-types */
-  SSL_CTX* ctx;
-  SSL*     handle;
-  X509*    server_cert;
+  void* ctx;
+  void*     handle;
+  void*    server_cert;
 #elif defined(USE_GNUTLS)
   gnutls_session_t session;
   gnutls_certificate_credentials_t cred;
@@ -1403,7 +1396,7 @@ struct UrlState {
                      ares_channel f.e. */
 
 #if defined(USE_OPENSSL) && defined(HAVE_OPENSSL_ENGINE_H)
-  ENGINE *engine;
+  void *engine;
 #endif /* USE_OPENSSL */
   struct timeval expiretime; /* set this with Curl_expire() only */
   struct Curl_tree timenode; /* for the splay stuff */

@@ -329,6 +329,7 @@ pushd "$CURL_BUILD_DIR"
                         -DENABLE_THREADED_RESOLVER:BOOL=ON \
                         -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                         -DUSE_NGHTTP2:BOOL=TRUE \
+                        -DCURL_DISABLE_CRYPTO_AUTH=ON \
                         -DCMAKE_INSTALL_PREFIX="$stage" \
                         -DCMAKE_INSTALL_LIBDIR="$stage/lib/release/$arch" \
                         -DCMAKE_OSX_ARCHITECTURES="$arch" \
@@ -400,13 +401,14 @@ pushd "$CURL_BUILD_DIR"
                         -DENABLE_THREADED_RESOLVER:BOOL=ON \
                         -DCMAKE_USE_OPENSSL:BOOL=TRUE \
                         -DUSE_NGHTTP2:BOOL=TRUE \
+                        -DCURL_DISABLE_CRYPTO_AUTH=ON \
                         -DBUILD_SHARED_LIBS:BOOL=FALSE \
                         -DCMAKE_INSTALL_PREFIX=$stage \
-                        -DZLIB_LIBRARIES="${stage}/packages/lib/release/libz.a" \
+                        -DZLIB_LIBRARIES="${stage}/packages/lib/$arch/release/libz.a" \
                         -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib-ng" \
-                        -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
+                        -DNGHTTP2_LIBRARIES="${stage}/packages/lib/$arch/release/libnghttp2.a" \
                         -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
-                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a;${stage}/packages/lib/release/libtls.a;dl" \
+                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/$arch/release/libcrypto.a;${stage}/packages/lib/$arch/release/libssl.a;${stage}/packages/lib/$arch/release/libtls.a;dl" \
                         -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
 

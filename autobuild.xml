@@ -265,7 +265,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/release/libcurl.a</string>
+            <string>lib/sse/release/libcurl.a</string>
+            <string>lib/avx2/release/libcurl.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
@@ -284,8 +285,12 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/libcurld.lib</string>
-            <string>lib/release/libcurl.lib</string>
+            <string>lib/sse/debug/libcurld.lib</string>
+            <string>lib/avx2/debug/libcurld.lib</string>
+            <string>lib/arm64/debug/libcurld.lib</string>
+            <string>lib/sse/release/libcurl.lib</string>
+            <string>lib/avx2/release/libcurl.lib</string>
+            <string>lib/arm64/release/libcurl.lib</string>
           </array>
           <key>name</key>
           <string>windows</string>

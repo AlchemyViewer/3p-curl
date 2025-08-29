@@ -151,7 +151,7 @@ pushd "$CURL_BUILD_DIR"
         windows*)
             load_vsvars
 
-            for arch in sse avx2 arm64 ; do
+            for arch in sse avx2 ; do
                 platform_target="x64"
                 if [[ "$arch" == "arm64" ]]; then
                     platform_target="ARM64"
@@ -182,7 +182,7 @@ pushd "$CURL_BUILD_DIR"
                         -DZLIB_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/zlib-ng)" \
                         -DNGHTTP2_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/debug/nghttp2.lib)" \
                         -DNGHTTP2_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/nghttp2)" \
-                        -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/debug/crypto.lib);$(cygpath -m ${stage}/packages/lib/$arch/debug/ssl.lib);$(cygpath -m ${stage}/packages/lib/$arch/debug/tls.lib);Bcrypt.lib" \
+                        -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/debug/libcrypto.lib);$(cygpath -m ${stage}/packages/lib/$arch/debug/libssl.lib)" \
                         -DOPENSSL_INCLUDE_DIR="$(cygpath -m ${stage}/packages/include/)"
 
                     cmake --build . --config Debug -j$AUTOBUILD_CPU_COUNT
@@ -205,8 +205,8 @@ pushd "$CURL_BUILD_DIR"
                         expr "$curlout" : "curl $(escape_dots "$version")" #> /dev/null
                         # libcurl/version
                         expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
-                        # LibreSSL/version
-                        expr "$curlout" : ".* LibreSSL/" > /dev/null
+                        # OpenSSL/version
+                        expr "$curlout" : ".* OpenSSL/" > /dev/null
                         # zlib/version
                         expr "$curlout" : ".* zlib/.*zlib-ng" > /dev/null
                         # nghttp2/version
@@ -243,7 +243,7 @@ pushd "$CURL_BUILD_DIR"
                         -DZLIB_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/zlib-ng)" \
                         -DNGHTTP2_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/release/nghttp2.lib)" \
                         -DNGHTTP2_INCLUDE_DIRS="$(cygpath -m ${stage}/packages/include/nghttp2)" \
-                        -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/release/crypto.lib);$(cygpath -m ${stage}/packages/lib/$arch/release/ssl.lib);$(cygpath -m ${stage}/packages/lib/$arch/release/tls.lib);Bcrypt.lib" \
+                        -DOPENSSL_LIBRARIES="$(cygpath -m ${stage}/packages/lib/$arch/release/libcrypto.lib);$(cygpath -m ${stage}/packages/lib/$arch/release/libssl.lib)" \
                         -DOPENSSL_INCLUDE_DIR="$(cygpath -m ${stage}/packages/include/)"
 
                     check_damage "$AUTOBUILD_PLATFORM"
@@ -268,8 +268,8 @@ pushd "$CURL_BUILD_DIR"
                         expr "$curlout" : "curl $(escape_dots "$version")" #> /dev/null
                         # libcurl/version
                         expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
-                        # LibreSSL/version
-                        expr "$curlout" : ".* LibreSSL/" > /dev/null
+                        # OpenSSL/version
+                        expr "$curlout" : ".* OpenSSL/" > /dev/null
                         # zlib/version
                         expr "$curlout" : ".* zlib/.*zlib-ng" > /dev/null
                         # nghttp2/version
@@ -338,7 +338,7 @@ pushd "$CURL_BUILD_DIR"
                         -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib-ng" \
                         -DNGHTTP2_LIBRARIES="${stage}/packages/lib/release/libnghttp2.a" \
                         -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
-                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a;${stage}/packages/lib/release/libtls.a" \
+                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/release/libcrypto.a;${stage}/packages/lib/release/libssl.a" \
                         -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
                     cmake --build . --config Release -j$AUTOBUILD_CPU_COUNT
@@ -375,8 +375,8 @@ pushd "$CURL_BUILD_DIR"
             expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null
             # libcurl/version
             expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
-            # LibreSSL/version
-            expr "$curlout" : ".* LibreSSL/" > /dev/null
+            # OpenSSL/version
+            expr "$curlout" : ".* OpenSSL/" > /dev/null
             # zlib/version
             expr "$curlout" : ".* zlib/" > /dev/null
             # nghttp2/versionx
@@ -408,7 +408,7 @@ pushd "$CURL_BUILD_DIR"
                         -DZLIB_INCLUDE_DIRS="${stage}/packages/include/zlib-ng" \
                         -DNGHTTP2_LIBRARIES="${stage}/packages/lib/$arch/release/libnghttp2.a" \
                         -DNGHTTP2_INCLUDE_DIRS="${stage}/packages/include/nghttp2" \
-                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/$arch/release/libcrypto.a;${stage}/packages/lib/$arch/release/libssl.a;${stage}/packages/lib/$arch/release/libtls.a;dl" \
+                        -DOPENSSL_LIBRARIES="${stage}/packages/lib/$arch/release/libcrypto.a;${stage}/packages/lib/$arch/release/libssl.a;dl" \
                         -DOPENSSL_INCLUDE_DIR="${stage}/packages/include/"
 
 
@@ -441,8 +441,8 @@ pushd "$CURL_BUILD_DIR"
                     expr "$curlout" : "curl $(escape_dots "$version")" > /dev/null
                     # libcurl/version
                     expr "$curlout" : ".* libcurl/$(escape_dots "$version")" > /dev/null
-                    # LibreSSL/version
-                    expr "$curlout" : ".* LibreSSL/" > /dev/null
+                    # OpenSSL/version
+                    expr "$curlout" : ".* OpenSSL/" > /dev/null
                     # zlib/version
                     expr "$curlout" : ".* zlib/" > /dev/null
                     # nghttp2/versionx

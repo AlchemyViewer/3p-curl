@@ -65,13 +65,6 @@
 #include <openssl/bn.h>
 #include <openssl/rsa.h>
 
-#ifdef USE_OPENSSL
-#include <openssl/ssl.h>
-#ifdef HAVE_OPENSSL_ENGINE_H
-#include <openssl/engine.h>
-#endif
-#endif /* USE_OPENSSL */
-
 #ifdef HAVE_OPENSSL_PKCS12_H
 #include <openssl/pkcs12.h>
 #endif
@@ -111,8 +104,8 @@
 #define OPENSSL_NO_SSL2
 #endif
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L /* OpenSSL 1.1.0+ and LibreSSL */
-
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && /* OpenSSL 1.1.0+ */ \
+  !defined(LIBRESSL_VERSION_NUMBER)
 #define SSLEAY_VERSION_NUMBER OPENSSL_VERSION_NUMBER
 #define HAVE_X509_GET0_EXTENSIONS 1 /* added in 1.1.0 -pre1 */
 #define HAVE_OPAQUE_EVP_PKEY 1 /* since 1.1.0 -pre3 */
@@ -137,7 +130,8 @@ static unsigned long OpenSSL_version_num(void)
 #endif
 #endif
 
-#if (OPENSSL_VERSION_NUMBER >= 0x1000200fL)
+#if (OPENSSL_VERSION_NUMBER >= 0x1000200fL) && /* 1.0.2 or later */ \
+  !defined(LIBRESSL_VERSION_NUMBER)
 #define HAVE_X509_GET0_SIGNATURE 1
 #endif
 
@@ -731,27 +725,12 @@ static int x509_name_oneline(X509_NAME *a, char *buf, size_t size)
  */
 int Curl_ossl_init(void)
 {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-  const uint64_t flags =
-#ifdef OPENSSL_INIT_ENGINE_ALL_BUILTIN
-    /* not present in BoringSSL */
-    OPENSSL_INIT_ENGINE_ALL_BUILTIN |
-#endif
-#ifdef CURL_DISABLE_OPENSSL_AUTO_LOAD_CONFIG
-    OPENSSL_INIT_NO_LOAD_CONFIG |
-#else
-    OPENSSL_INIT_LOAD_CONFIG |
-#endif
-    0;
-  OPENSSL_init_ssl(flags, NULL);
-#else
   OPENSSL_load_builtin_modules();
 
 #ifdef HAVE_ENGINE_LOAD_BUILTIN_ENGINES
   ENGINE_load_builtin_engines();
 #endif
 
-#ifndef CURL_DISABLE_OPENSSL_AUTO_LOAD_CONFIG
   /* OPENSSL_config(NULL); is "strongly recommended" to use but unfortunately
      that function makes an exit() call on wrongly formatted config files
      which makes it hard to use in some situations. OPENSSL_config() itself
@@ -767,8 +746,11 @@ int Curl_ossl_init(void)
   CONF_modules_load_file(NULL, NULL,
                          CONF_MFLAGS_DEFAULT_SECTION|
                          CONF_MFLAGS_IGNORE_MISSING_FILE);
-#endif
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && \
+    !defined(LIBRESSL_VERSION_NUMBER)
+  /* OpenSSL 1.1.0+ takes care of initialization itself */
+#else
   /* Lets get nice error messages */
   SSL_load_error_strings();
 
@@ -785,7 +767,8 @@ int Curl_ossl_init(void)
 /* Global cleanup */
 void Curl_ossl_cleanup(void)
 {
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && \
+    !defined(LIBRESSL_VERSION_NUMBER)
   /* OpenSSL 1.1 deprecates all these cleanup functions and
      turns them into no-ops in OpenSSL 1.0 compatibility mode */
 #else
@@ -877,6 +860,13 @@ CURLcode Curl_ossl_set_engine(struct Curl_easy *data, const char *engine)
 
 #if OPENSSL_VERSION_NUMBER >= 0x00909000L
   e = ENGINE_by_id(engine);
+#else
+  /* avoid memory leak */
+  for(e = ENGINE_get_first(); e; e = ENGINE_get_next(e)) {
+    const char *e_id = ENGINE_get_id(e);
+    if(!strcmp(engine, e_id))
+      break;
+  }
 #endif
 
   if(!e) {
@@ -933,7 +923,7 @@ CURLcode Curl_ossl_set_engine_default(struct Curl_easy *data)
 struct curl_slist *Curl_ossl_engines_list(struct Curl_easy *data)
 {
   struct curl_slist *list = NULL;
-#ifdef USE_OPENSSL_ENGINE
+#if defined(USE_OPENSSL) && defined(HAVE_OPENSSL_ENGINE_H)
   struct curl_slist *beg;
   ENGINE *e;
 
@@ -1880,7 +1870,8 @@ static CURLcode ossl_connect_step1(struct connectdata *conn, int sockindex)
   case CURL_SSLVERSION_TLSv1_2:
   case CURL_SSLVERSION_TLSv1_3:
     /* it will be handled later with the context options */
-#if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L) && \
+    !defined(LIBRESSL_VERSION_NUMBER)
     req_method = TLS_client_method();
 #else
     req_method = SSLv23_client_method();
@@ -2591,6 +2582,21 @@ static CURLcode get_cert_chain(struct connectdata *conn,
       }
       X509V3_ext(data, i, X509_get0_extensions(x));
     }
+#else
+    {
+      /* before OpenSSL 1.0.2 */
+      X509_CINF *cinf = x->cert_info;
+
+      i2a_ASN1_OBJECT(mem, cinf->signature->algorithm);
+      push_certinfo("Signature Algorithm", i);
+
+      i2a_ASN1_OBJECT(mem, cinf->key->algor->algorithm);
+      push_certinfo("Public Key Algorithm", i);
+
+      X509V3_ext(data, i, cinf->extensions);
+
+      psig = x->signature;
+    }
 #endif
 
     ASN1_TIME_print(mem, X509_get0_notBefore(x));
@@ -3278,21 +3284,7 @@ static ssize_t ossl_recv(struct connectdata *conn, /* connection data */
 
 size_t Curl_ossl_version(char *buffer, size_t size)
 {
-#ifdef LIBRESSL_VERSION_NUMBER
-  char *p;
-  size_t count;
-  const char *ver = OpenSSL_version(OPENSSL_VERSION);
-  const char expected[] = OSSL_PACKAGE " "; /* ie "LibreSSL " */
-  if(curl_strnequal(ver, expected, sizeof(expected) - 1)) {
-    ver += sizeof(expected) - 1;
-  }
-  count = snprintf(buffer, size, "%s/%s", OSSL_PACKAGE, ver);
-  for(p = buffer; *p; ++p) {
-    if(ISBLANK(*p))
-      *p = '_';
-  }
-  return count;
-#elif defined(OPENSSL_IS_BORINGSSL)
+#ifdef OPENSSL_IS_BORINGSSL
   return snprintf(buffer, size, OSSL_PACKAGE);
 #else /* OPENSSL_IS_BORINGSSL */
   char sub[3];

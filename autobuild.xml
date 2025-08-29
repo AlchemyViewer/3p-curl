@@ -70,7 +70,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <key>source_type</key>
         <string>hg</string>
       </map>
-      <key>libressl</key>
+      <key>openssl</key>
       <map>
         <key>platforms</key>
         <map>
@@ -79,60 +79,56 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>92025cecef85731ab63e787b9e2790fc54429a8b00f6f56c7b9c12f124f18c01cfa7f3c957055743cdb1e880b4c1ba2d2f22524694fa30e98e6cd3c147156700</string>
+              <string>a6202282fe512529737c5dbcc39768b9bb45444fb0e20095ec34c21738d168eb52afc3643513af9003d8bfe2d4ab30565b86d5de1193970d467980fa120c62bc</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-libressl/releases/download/v4.1.0-r3/libressl-4.1.0-r3-windows64-17288526185.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-windows64-17316774427.tar.zst</string>
             </map>
             <key>name</key>
             <string>windows64</string>
-          </map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>c4c9a0f9a738187c0ea70b5bd0f2e5e8b580e59059d3e6e1765ecea8c865d5d2e6005f641ce619ee55a81624f621e9cc13fc03c5b3c29fc53ce5b9f639203194</string>
-              <key>hash_algorithm</key>
-              <string>blake2b</string>
-              <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-libressl/releases/download/v4.1.0-r3/libressl-4.1.0-r3-darwin64-17288526185.tar.zst</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
           </map>
           <key>linux64</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>4f669cd31533b74333205206722e116dee2f2b6547aaf3dbf6110a0433ccaaa1f7f57822a6c03c9c5a4822f8a38b59da2c507b29045983466d0a26706912c066</string>
+              <string>38f89e2042046debb7356cb6037378677acb7c5d6a66246ff9c1841feda13679d38f06fa9299a7d7198517004d52c9f173c4146206162e6534e97b331ecb6cb2</string>
               <key>hash_algorithm</key>
               <string>blake2b</string>
               <key>url</key>
-              <string>https://github.com/AlchemyViewer/3p-libressl/releases/download/v4.1.0-r3/libressl-4.1.0-r3-linux64-17288526185.tar.zst</string>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-linux64-17316774427.tar.zst</string>
             </map>
             <key>name</key>
             <string>linux64</string>
           </map>
+          <key>darwin64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>cdca8c5af9618dbb024e52eb99c612903afdbe6c4e1f41cc26f17de62921c35b75e322550f02b109a8916b764ee9febebcdb329cc652c0c2e972b73a828abf9a</string>
+              <key>hash_algorithm</key>
+              <string>blake2b</string>
+              <key>url</key>
+              <string>https://github.com/AlchemyViewer/3p-openssl/releases/download/v1.1.1w-r3/openssl-1.1.1w-r3-darwin64-17316774427.tar.zst</string>
+            </map>
+            <key>name</key>
+            <string>darwin64</string>
+          </map>
         </map>
         <key>license</key>
-        <string>libressl</string>
+        <string>openssl</string>
         <key>license_file</key>
-        <string>LICENSES/libressl.txt</string>
+        <string>LICENSES/openssl.txt</string>
         <key>copyright</key>
-        <string>LibreSSL files are retained under the copyright of the authors.</string>
+        <string>Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved; Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</string>
         <key>version</key>
-        <string>4.1.0-r3</string>
-        <key>use_scm_version</key>
-        <boolean>true</boolean>
+        <string>1.1.1w-r3</string>
         <key>name</key>
-        <string>libressl</string>
-        <key>canonical_repo</key>
-        <string>https://github.com/AlchemyViewer/3p-libressl</string>
+        <string>openssl</string>
         <key>description</key>
-        <string>LibreSSL Portable</string>
+        <string>Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) Library</string>
       </map>
       <key>zlib-ng</key>
       <map>
@@ -287,10 +283,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
           <array>
             <string>lib/sse/debug/libcurld.lib</string>
             <string>lib/avx2/debug/libcurld.lib</string>
-            <string>lib/arm64/debug/libcurld.lib</string>
             <string>lib/sse/release/libcurl.lib</string>
             <string>lib/avx2/release/libcurl.lib</string>
-            <string>lib/arm64/release/libcurl.lib</string>
           </array>
           <key>name</key>
           <string>windows</string>
